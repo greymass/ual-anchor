@@ -20,14 +20,6 @@ export class AnchorUser extends User {
     this.accountName = session.auth.actor
     this.requestPermission = session.auth.permission
     this.signatureProvider = session.makeSignatureProvider()
-
-    const rpcEndpoint = this.chain.rpcEndpoints[0]
-    const rpcEndpointString = this.buildRpcEndpoint(rpcEndpoint)
-    this.rpc = new JsonRpc(rpcEndpointString)
-    this.api = new Api({
-      rpc: this.rpc,
-      signatureProvider: this.signatureProvider,
-    })
   }
 
   async init() {
