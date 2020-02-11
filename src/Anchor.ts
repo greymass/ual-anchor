@@ -1,5 +1,5 @@
 import {
-  Authenticator, ButtonStyle,
+  Authenticator, ButtonStyle, Chain,
   UALError, UALErrorType, User
 } from 'universal-authenticator-library'
 
@@ -13,7 +13,24 @@ import BrowserTransport from 'anchor-link-browser-transport'
 export class Anchor extends Authenticator {
   private users: AnchorUser[] = []
   private anchor: any
-  // private appName: string
+  private appName: string
+
+  /**
+   * Anchor Constructor.
+   *
+   * @param chains
+   * @param options { appName } appName is a required option to use Scatter
+   */
+  constructor(chains: Chain[], options?: any) {
+    super(chains)
+    if (options && options.appName) {
+      this.appName = options.appName
+    } else {
+      throw new UALAnchorError('Anchor requires the appName property to be set on the `options` argument.',
+        UALErrorType.Initialization,
+        null)
+    }
+  }
 
   /**
    * Called after `shouldRender` and should be used to handle any async actions required to initialize the authenticator
@@ -120,7 +137,7 @@ export class Anchor extends Authenticator {
     this.users = []
     try {
       for (const chain of this.chains) {
-        const identity = await this.anchor.login('ual-anchorlink-demo')
+        const identity = await this.anchor.login(this.appName)
         this.users = [new AnchorUser(chain, identity)]
       }
       return this.users
