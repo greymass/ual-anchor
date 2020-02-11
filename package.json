@@ -1,0 +1,67 @@
+{
+  "name": "ual-anchor",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "author": {
+    "name": "Greymass",
+    "url": "https://greymass.com"
+  },
+  "contributors": [
+    "Aaron Cox",
+    "Johan Nordberg"
+  ],
+  "scripts": {
+    "build": "tsc --build tsconfig.json",
+    "clean-build": "rm -rf dist && yarn build",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "prepublish": "yarn clean-build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "anchor-link": "^0.2.1",
+    "anchor-link-browser-transport": "^0.1.1",
+    "elliptic": "6.5.2",
+    "eosjs": "21.0.1-rc1",
+    "universal-authenticator-library": "0.1.4"
+  },
+  "resolutions": {
+    "cache-base": "4.0.0"
+  },
+  "jest": {
+    "verbose": false,
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts?)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules",
+      "<rootDir>/dist"
+    ],
+    "testRegex": "(/src/.*(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testEnvironment": "jsdom"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.2.0",
+    "@blockone/tslint-config-blockone": "^3.0.0",
+    "@types/elliptic": "^6.4.10",
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.12.20",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/greymass/ual-anchor"
+  }
+}

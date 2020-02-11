@@ -1,0 +1,13 @@
+sudo: false
+language: node_js
+node_js:
+- '10.0.0'
+stages:
+- test
+jobs:
+  include:
+  - stage: test
+    name: "Lint and Test"
+    script:
+    - yarn lint
+    - yarn test
