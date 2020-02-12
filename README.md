@@ -14,7 +14,7 @@ This authenticator is meant to be used with [Anchor](https://github.com/greymass
 
 You must use one of the UAL renderers below.
 
-React - `ual-reactjs-renderer`
+React - `ual-reactjs-renderer`  
 PlainJS - `ual-plainjs-renderer`
 
 #### Basic Usage with React
