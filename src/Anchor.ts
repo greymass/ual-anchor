@@ -145,6 +145,11 @@ export class Anchor extends Authenticator {
    */
   async login(): Promise<User[]> {
     this.users = []
+    if (this.chains.length > 1) {
+      throw new UALAnchorError('UAL-Anchor does not yet support providing multiple chains to UAL. Please initialize the UAL provider with a single chain.',
+        UALErrorType.Unsupported,
+        null)
+    }
     try {
       for (const chain of this.chains) {
         const identity = await this.anchor.login(this.appName)
