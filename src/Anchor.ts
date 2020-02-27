@@ -3,7 +3,7 @@ import {
   UALError, UALErrorType, User
 } from 'universal-authenticator-library'
 
-import { Link } from 'anchor-link'
+import { Link, LinkSession  } from 'anchor-link'
 import { Name } from './interfaces'
 import { AnchorUser } from './AnchorUser'
 import { AnchorLogo } from './AnchorLogo'
@@ -12,8 +12,13 @@ import BrowserTransport from 'anchor-link-browser-transport'
 
 export class Anchor extends Authenticator {
   private users: AnchorUser[] = []
-  private anchor: any
   private appName: string
+
+  private link?: any;
+  private sessionId: string;
+  private storage: SessionStorage;
+
+  // private session?: LinkSession;
 
   /**
    * Anchor Constructor.
@@ -23,6 +28,12 @@ export class Anchor extends Authenticator {
    */
   constructor(chains: Chain[], options?: any) {
     super(chains)
+
+    // Establish sessions for persistence
+    this.storage = options.sessionStorage || new LocalSessionStorage();
+    this.sessionId = chains[0].chainId
+    this.users = []
+
     if (options && options.appName) {
       this.appName = options.appName
     } else {
@@ -38,19 +49,28 @@ export class Anchor extends Authenticator {
   async init() {
     const [chain] = this.chains
     const [rpc] = chain.rpcEndpoints
-    this.anchor = new Link({
+    this.link = new Link({
       chainId: chain.chainId,
       rpc: `${rpc.protocol}://${rpc.host}:${rpc.port}`,
       service: 'https://cb.anchor.link',
       transport: new BrowserTransport()
     })
+
+    // attempt to restore existing session
+    const session = await this.storage.restore(
+      this.link,
+      this.sessionId
+    );
+    if (session) {
+      this.users = [new AnchorUser(chain, session)]
+    }
   }
 
   /**
    * Resets the authenticator to its initial, default state then calls `init` method
    */
   reset() {
-
+    this.users = []
   }
 
 
@@ -172,6 +192,8 @@ export class Anchor extends Authenticator {
    * Logs the user out of the dapp. This will be strongly dependent on each Authenticator app's patterns.
    */
   async logout(): Promise<void>  {
+    await this.storage.remove(this.sessionId);
+    this.reset()
   }
 
   /**
@@ -179,5 +201,44 @@ export class Anchor extends Authenticator {
    */
   public requiresGetKeyConfirmation(): boolean {
     return false
+  }
+}
+
+interface SessionStorage {
+  store(session: LinkSession, id: string, accountName?: string): Promise<void>;
+  restore(
+    link: Link,
+    id: string,
+    accountName?: string
+  ): Promise<LinkSession | null>;
+  remove(id: string, accountName?: string): Promise<void>;
+}
+
+class LocalSessionStorage implements SessionStorage {
+  constructor(readonly keyPrefix: string = 'anchorlink') {}
+
+  private sessionKey(id: string, accountName?: string) {
+    return [this.keyPrefix, id, accountName]
+      .filter(v => typeof v === 'string' && v.length > 0)
+      .join('-');
+  }
+
+  async store(session: LinkSession, id: string, accountName?: string) {
+    const key = this.sessionKey(id, accountName);
+    const data = session.serialize();
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+
+  async restore(link: Link, id: string, accountName?: string) {
+    const key = this.sessionKey(id, accountName);
+    const data = JSON.parse(localStorage.getItem(key) || 'null');
+    if (data) {
+      return LinkSession.restore(link, data);
+    }
+    return null;
+  }
+
+  async remove(id: string, accountName?: string) {
+    localStorage.removeItem(this.sessionKey(id, accountName));
   }
 }
