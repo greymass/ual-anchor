@@ -172,8 +172,6 @@ export class Anchor extends Authenticator {
    * Logs the user out of the dapp. This will be strongly dependent on each Authenticator app's patterns.
    */
   async logout(): Promise<void>  {
-    window.localStorage.removeItem('UALLoggedInAuthType')
-    window.localStorage.removeItem('UALAccountName')
   }
 
   /**
