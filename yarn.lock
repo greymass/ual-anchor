@@ -354,13 +354,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/elliptic@6.4.10":
-  version "6.4.10"
-  resolved "https://registry.yarnpkg.com/@types/elliptic/-/elliptic-6.4.10.tgz#352078ebc911484e30fc0d1eca3e3c865bf0e8f8"
-  integrity sha512-9h+Bw+aNiLzcq9DGstHccNxSsJ5iNId7mzruid7+kwm7F1IGvb4rBOOPo3+twt9ZPhI3y+JJ2m1UfgU8cOEJuQ==
-  dependencies:
-    "@types/bn.js" "*"
-
 "@types/elliptic@^6.4.10":
   version "6.4.11"
   resolved "https://registry.yarnpkg.com/@types/elliptic/-/elliptic-6.4.11.tgz#f8c84575bf7f4bd0f9e9bebe476b26bc8ac770e2"
@@ -1147,19 +1140,6 @@ ecurve@1.0.5:
   dependencies:
     bigi "^1.1.0"
 
-elliptic@6.5.0:
-  version "6.5.0"
-  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.0.tgz#2b8ed4c891b7de3200e14412a5b8248c7af505ca"
-  integrity sha512-eFOJTMyCYb7xtE/caJ6JJu+bhi67WCYNbkGSknu20pmM8Ke/bqOfdnZWxyoGN26JgfxTbXrsCkEw4KheCT/KGg==
-  dependencies:
-    bn.js "^4.4.0"
-    brorand "^1.0.1"
-    hash.js "^1.0.0"
-    hmac-drbg "^1.0.0"
-    inherits "^2.0.1"
-    minimalistic-assert "^1.0.0"
-    minimalistic-crypto-utils "^1.0.0"
-
 elliptic@6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.2.tgz#05c5678d7173c049d8ca433552224a495d0e3762"
@@ -1208,17 +1188,7 @@ eosjs-ecc@4.0.7, eosjs-ecc@^4.0.7:
     ecurve "1.0.5"
     randombytes "2.0.5"
 
-eosjs@21.0.1-rc1:
-  version "21.0.1-rc1"
-  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-21.0.1-rc1.tgz#671f38bf04cfa0786ef9fef4cab10aa5ca049cde"
-  integrity sha512-/6vnDdgtTO8WdL2v1psFEyMSeUOQZ3gtWkxP8SSKHp1XYla2fTbPJjHW5cM7pvGhExikL2VcAEsDKKgKo1kVLA==
-  dependencies:
-    "@types/elliptic" "6.4.10"
-    babel-runtime "6.26.0"
-    elliptic "6.5.0"
-    text-encoding "0.7.0"
-
-eosjs@^20.0.0:
+eosjs@^20.0.0, eosjs@^20.0.3:
   version "20.0.3"
   resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-20.0.3.tgz#f3ac1fa119b76dd07bf2825ad27342f6502a533b"
   integrity sha512-h0WSxsDo7AHz5IzpbQDrzyT/CYmbBDtFiiolTdtGd2FdKXEa6LDER4WbNp4qxCY7kD65KeG3knkGmOOFGbPJxw==
@@ -3631,10 +3601,10 @@ union-value@^1.0.0:
     is-extendable "^0.1.1"
     set-value "^2.0.1"
 
-universal-authenticator-library@0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/universal-authenticator-library/-/universal-authenticator-library-0.1.4.tgz#e3f31d743780077184475089a8a9b57300316161"
-  integrity sha512-1nU8W7yAc+ZQ+MlJA1gGKnGylSNyyaA2wC4Zy1RqtJo+asDYcNTc4gAySYp19TYhfdF0WwQXeve7SVuodbMHJA==
+universal-authenticator-library@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/universal-authenticator-library/-/universal-authenticator-library-0.2.0.tgz#6b609e5a3d6c8c2ad209ccc9f06f4bb6be4bc807"
+  integrity sha512-uukf31lXIB/nRaiO/Z1Aag48ZLWtiX3kd05XIz6QWwjuQbprLOzgesGgMeVxQNTCgTDHGxwtE/mzkZ+5R1x8qw==
 
 unset-value@^1.0.0:
   version "1.0.0"
