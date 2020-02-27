@@ -35,7 +35,7 @@ export class Anchor extends Authenticator {
     this.users = []
 
     if (options && options.appName) {
-      this.appName = options.appName
+      this.appName = `${options.appName}-${chains[0].chainId}`
     } else {
       throw new UALAnchorError('Anchor requires the appName property to be set on the `options` argument.',
         UALErrorType.Initialization,
