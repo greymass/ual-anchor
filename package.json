@@ -22,8 +22,8 @@
     "anchor-link": "^0.2.1",
     "anchor-link-browser-transport": "^0.1.1",
     "elliptic": "6.5.2",
-    "eosjs": "21.0.1-rc1",
-    "universal-authenticator-library": "0.1.4"
+    "eosjs": "^20.0.3",
+    "universal-authenticator-library": "0.2.0"
   },
   "resolutions": {
     "cache-base": "4.0.0"
