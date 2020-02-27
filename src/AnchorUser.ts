@@ -12,17 +12,14 @@ export class AnchorUser extends User {
   private accountName: string = ''
   private requestPermission: string = ''
 
-  constructor(chain, identity) {
+  constructor(chain, session) {
     super()
 
-    const { session } = identity
     this.chain = chain
     this.accountName = session.auth.actor
     this.requestPermission = session.auth.permission
     this.signatureProvider = session.makeSignatureProvider()
-  }
 
-  async init() {
     const rpcEndpoint = this.chain.rpcEndpoints[0]
     const rpcEndpointString = `${rpcEndpoint.protocol}://${rpcEndpoint.host}:${rpcEndpoint.port}`
     this.rpc = new JsonRpc(rpcEndpointString)
@@ -31,6 +28,7 @@ export class AnchorUser extends User {
       signatureProvider: this.signatureProvider,
     })
   }
+
 
   async signTransaction(
     transaction,
