@@ -14,9 +14,10 @@ export class Anchor extends Authenticator {
   private users: AnchorUser[] = []
   private appName: string
 
-  private link?: any;
-  private sessionId: string;
-  private storage: SessionStorage;
+  private anchorIsLoading: boolean
+  private link?: any
+  private sessionId: string
+  private storage: SessionStorage
 
   // private session?: LinkSession;
 
@@ -30,6 +31,7 @@ export class Anchor extends Authenticator {
     super(chains)
 
     // Establish sessions for persistence
+    this.anchorIsLoading = true
     this.storage = options.sessionStorage || new LocalSessionStorage();
     this.sessionId = chains[0].chainId
     this.users = []
@@ -56,6 +58,7 @@ export class Anchor extends Authenticator {
       transport: new BrowserTransport()
     })
 
+    this.anchorIsLoading = true
     // attempt to restore existing session
     const session = await this.storage.restore(
       this.link,
@@ -64,6 +67,7 @@ export class Anchor extends Authenticator {
     if (session) {
       this.users = [new AnchorUser(chain, session)]
     }
+    this.anchorIsLoading = false
   }
 
   /**
@@ -113,7 +117,7 @@ export class Anchor extends Authenticator {
    * Returns true if the authenticator is loading while initializing its internal state.
    */
   isLoading() {
-    return false
+    return this.anchorIsLoading
   }
 
 
@@ -136,6 +140,7 @@ export class Anchor extends Authenticator {
    */
   shouldRender() {
     return true
+    return this.isLoading()
   }
 
 
