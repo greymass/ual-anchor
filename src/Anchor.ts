@@ -49,6 +49,9 @@ export class Anchor extends Authenticator {
    * Called after `shouldRender` and should be used to handle any async actions required to initialize the authenticator
    */
   async init() {
+    this.anchorIsLoading = true
+
+    // establish anchor-link
     const [chain] = this.chains
     const [rpc] = chain.rpcEndpoints
     this.link = new Link({
@@ -58,15 +61,15 @@ export class Anchor extends Authenticator {
       transport: new BrowserTransport()
     })
 
-    this.anchorIsLoading = true
     // attempt to restore existing session
-    const session = await this.storage.restore(
+    const session = this.storage.restore(
       this.link,
       this.sessionId
     );
     if (session) {
       this.users = [new AnchorUser(chain, session)]
     }
+
     this.anchorIsLoading = false
   }
 
@@ -139,7 +142,6 @@ export class Anchor extends Authenticator {
    * ie. If your Authenticator App does not support mobile, it returns false when running in a mobile browser.
    */
   shouldRender() {
-    return true
     return this.isLoading()
   }
 
@@ -150,7 +152,7 @@ export class Anchor extends Authenticator {
    * shouldAutoLogin() true.
    */
   shouldAutoLogin() {
-    return false
+    return this.users.length > 0
   }
 
 
@@ -175,21 +177,19 @@ export class Anchor extends Authenticator {
         null)
     }
     try {
-      if (this.users.length > 0) {
-        console.log("returning session users", this.users)
-        return this.users
+      if (this.users.length === 0) {
+        const [chain] = this.chains
+        const identity = await this.link.login(this.appName)
+        await this.storage.store(identity.session, this.sessionId);
+        this.users = [new AnchorUser(chain, identity.session)]
       }
-      const [chain] = this.chains
-      const identity = await this.link.login(this.appName)
-      await this.storage.store(identity.session, this.sessionId);
-      this.users = [new AnchorUser(chain, identity.session)]
-      return this.users
     } catch (e) {
       throw new UALAnchorError(
         e.message,
         UALErrorType.Login,
         e)
     }
+    return this.users
   }
 
 
@@ -215,7 +215,7 @@ interface SessionStorage {
     link: Link,
     id: string,
     accountName?: string
-  ): Promise<LinkSession | null>;
+  ): LinkSession | null;
   remove(id: string, accountName?: string): Promise<void>;
 }
 
@@ -234,7 +234,7 @@ class LocalSessionStorage implements SessionStorage {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
-  async restore(link: Link, id: string, accountName?: string) {
+  restore(link: Link, id: string, accountName?: string) {
     const key = this.sessionKey(id, accountName);
     const data = JSON.parse(localStorage.getItem(key) || 'null');
     if (data) {
