@@ -19,8 +19,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "anchor-link": "^0.2.1",
-    "anchor-link-browser-transport": "^0.1.1",
+    "anchor-link": "^0.3.0",
+    "anchor-link-browser-transport": "^0.2.1",
     "elliptic": "6.5.2",
     "eosjs": "^20.0.3",
     "universal-authenticator-library": "0.2.0"
