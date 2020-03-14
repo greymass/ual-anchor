@@ -98,17 +98,6 @@ export class Anchor extends Authenticator {
   }
 
   /**
-   * Returns the amount of seconds after the authentication will be invalid for logging in on new
-   * browser sessions.  Setting this value to zero will cause users to re-attempt authentication on
-   * every new browser session.  Please note that the invalidate time will be saved client-side and
-   * should not be relied on for security.
-   */
-  shouldInvalidateAfter() {
-    return 0
-  }
-
-
-  /**
    * Returns error (if available) if the authenticator has errored while initializing.
    */
   getError(): UALError | null {
