@@ -434,9 +434,9 @@ acorn-walk@^6.0.1:
   integrity sha512-7evsyfH1cLOCdAzZAd43Cic04yKydNx0cF+7tiA19p1XnLLPU4dpCQOqpjqwokFe//vS0QqfqqjCS2JkiIs0cA==
 
 acorn@^5.5.3:
-  version "5.7.3"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
-  integrity sha512-T/zvzYRfbVojPWahDsE5evJdHb3oJoQfFbsrKM7w5Zcs++Tr257tia3BmMP8XYVjp1S9RZXQMh7gao96BlqZOw==
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.4.tgz#3e8d8a9947d0599a1796d10225d7432f4a4acf5e"
+  integrity sha512-1D++VG7BhrtvQpNbBzovKNc1FLGGEE/oGe7b9xJm/RFHMBeUaUGpluV9RLjZa47YFdPcDAenEYuq9pQPcMdLJg==
 
 acorn@^6.0.1:
   version "6.4.0"
@@ -453,26 +453,26 @@ ajv@^6.5.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-anchor-link-browser-transport@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/anchor-link-browser-transport/-/anchor-link-browser-transport-0.1.1.tgz#0642363fc8e52289402672353d6a8b6d9b3f9e47"
-  integrity sha512-g2NRABLGgSEu2ELfkZsFKZ/zDLe3SLGETyCccISwoH7F7IXe0ZMVh631McGW+Co+HSZ1azJ5CNjFvphciGgcuw==
+anchor-link-browser-transport@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/anchor-link-browser-transport/-/anchor-link-browser-transport-0.2.1.tgz#fbb720e85b6abcc86a8ba795eca98cd870623387"
+  integrity sha512-DZLOUPV33JnoEwVV8iijC+49iXNSo2kNUTXdUgz1q6Xr86ITSPi3eqKsn8aNzfHU0N9sb1x1uLxWEHicBw9nYg==
   dependencies:
     qrcode "^1.4.4"
 
-anchor-link@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-0.2.1.tgz#9210a4c78f84e6d077d84c22325c5dd291690dd3"
-  integrity sha512-cuXu8vaGFe8QNsyCphmkNuUS9EqvpmxiSdPRlVmkWff11S+fmqFnGlw/Nf8Mm7zDMHwKaAdjeWUI2wWwbYCU7w==
+anchor-link@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-0.3.0.tgz#3a399fff62b49101efe596db19948bda3a9ac6f8"
+  integrity sha512-N7CSLYzcQzXot2RyNuir5qsaPzkAdLJbSuf8qV+4tB3SdMxP3Jujy+2LTPZrjwYIPqcwVKT97s7bOcPtFKe6BQ==
   dependencies:
-    eosio-signing-request "^1.0.2"
+    eosio-signing-request "^1.1.1"
     eosjs "^20.0.0"
     eosjs-ecc "^4.0.7"
     fetch-ponyfill "^6.1.0"
     pako "^1.0.10"
     qrcode-terminal "^0.12.0"
-    uuid "^3.3.3"
-    ws "^7.2.1"
+    uuid "^7.0.2"
+    ws "^7.2.2"
 
 ansi-escapes@^3.0.0:
   version "3.2.0"
@@ -1165,10 +1165,10 @@ end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
-eosio-signing-request@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-1.0.2.tgz#89b7f9e55a3f812614842858976a4dc0dd617723"
-  integrity sha512-es7iSWcGF2T8/iqo8oAKBv5yIDnr5AGpGs3z+PcRb74Oh3RKbKbD3ibejnIO/PU99T0SyYmROwPG0w+EJWWAGw==
+eosio-signing-request@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-1.1.1.tgz#f221caaafeb564944b71cb0f9eb0f4795cb1661c"
+  integrity sha512-ZEq/R3mmgmBnjmjjyH5WstTPUBqK26NxT4fejqmkaco2h/I3wj6Nlz3fJuOoCYi01DMZ8/k5lBRbpHALCXQamg==
   dependencies:
     eosjs "^20.0.0"
     fast-sha256 "^1.1.1"
@@ -3644,10 +3644,10 @@ uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.3.tgz#4568f0216e78760ee1dbf3a4d2cf53e224112866"
   integrity sha512-pW0No1RGHgzlpHJO1nsVrHKpOEIxkGg1xB+v0ZmdNH5OAeAwzAVrCnI2/6Mtx+Uys6iaylxa+D3g4j63IKKjSQ==
 
-uuid@^3.3.3:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
-  integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
+uuid@^7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-7.0.2.tgz#7ff5c203467e91f5e0d85cfcbaaf7d2ebbca9be6"
+  integrity sha512-vy9V/+pKG+5ZTYKf+VcphF5Oc6EFiu3W8Nv3P3zIh0EqVI80ZxOzuPfe9EHjkFNvf8+xuTHVeei4Drydlx4zjw==
 
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
@@ -3762,10 +3762,10 @@ ws@^5.2.0:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^7.2.1:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.1.tgz#03ed52423cd744084b2cf42ed197c8b65a936b8e"
-  integrity sha512-sucePNSafamSKoOqoNfBd8V0StlkzJKL2ZAhGQinCfNQ+oacw+Pk7lcdAElecBF2VkLNZRiIb5Oi1Q5lVUVt2A==
+ws@^7.2.2:
+  version "7.2.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.3.tgz#a5411e1fb04d5ed0efee76d26d5c46d830c39b46"
+  integrity sha512-HTDl9G9hbkNDk98naoR/cHDws7+EyYMOdL1BmjsZXRUjf7d+MficC4B7HLUPlSiho0vg+CWKrGIt/VJBd1xunQ==
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
