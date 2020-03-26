@@ -5,6 +5,7 @@ import { UALAnchorError } from './UALAnchorError'
 
 export class AnchorUser extends User {
   private api: Api
+  private authorityProvider: any
   private rpc: JsonRpc
   private signatureProvider: any
 
@@ -18,12 +19,14 @@ export class AnchorUser extends User {
     this.chain = chain
     this.accountName = session.auth.actor
     this.requestPermission = session.auth.permission
+    this.authorityProvider = session.makeAuthorityProvider()
     this.signatureProvider = session.makeSignatureProvider()
 
     const rpcEndpoint = this.chain.rpcEndpoints[0]
     const rpcEndpointString = `${rpcEndpoint.protocol}://${rpcEndpoint.host}:${rpcEndpoint.port}`
     this.rpc = new JsonRpc(rpcEndpointString)
     this.api = new Api({
+      authorityProvider: this.authorityProvider,
       rpc: this.rpc,
       signatureProvider: this.signatureProvider,
     })
