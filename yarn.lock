@@ -460,10 +460,10 @@ anchor-link-browser-transport@^0.2.1:
   dependencies:
     qrcode "^1.4.4"
 
-anchor-link@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-0.3.0.tgz#3a399fff62b49101efe596db19948bda3a9ac6f8"
-  integrity sha512-N7CSLYzcQzXot2RyNuir5qsaPzkAdLJbSuf8qV+4tB3SdMxP3Jujy+2LTPZrjwYIPqcwVKT97s7bOcPtFKe6BQ==
+anchor-link@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-0.4.0.tgz#a755d3c439dbfa813470d907ec7c80994a7ca28b"
+  integrity sha512-31t20Q8a4xc2L6W5TDKHT3u2MDmggZaIohdVXt3YJtS/zO2aacpkqfDuKxBB/UrpDeLknwA37IXKOYIGSvE6BA==
   dependencies:
     eosio-signing-request "^1.1.1"
     eosjs "^20.0.0"
