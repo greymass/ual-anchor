@@ -121,7 +121,7 @@ export class Anchor extends Authenticator {
        icon: AnchorLogo,
        text: Name,
        textColor: 'white',
-       background: '#021b72'
+       background: '#3650A2'
      }
    }
 
