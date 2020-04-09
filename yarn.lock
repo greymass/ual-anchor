@@ -453,10 +453,10 @@ ajv@^6.5.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-anchor-link-browser-transport@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/anchor-link-browser-transport/-/anchor-link-browser-transport-1.0.0.tgz#829427588caf8dd25b4d3a7bbb509d980586dd08"
-  integrity sha512-3y6hyw2bJ43VdkdhIMJ3diYwCOfUTCgMQJ5fZw3sUDGSgbwgAa7PIswxd+okulMMP8HgO8OrqjZufkXChOX/8w==
+anchor-link-browser-transport@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/anchor-link-browser-transport/-/anchor-link-browser-transport-1.0.2.tgz#9f69df1f2ef827ba05fde7e6392511931fcb725c"
+  integrity sha512-IJ4eKQv77G/5PV4ahTbGWdO6VlgjmobX36xQ8MYnOVPOrb0BHEonY/N8EaObY5VUHpr0STaNyCLbRr9gePhXow==
   dependencies:
     qrcode "^1.4.4"
 
