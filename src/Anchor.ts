@@ -16,6 +16,7 @@ export class Anchor extends Authenticator {
 
   private anchorIsLoading: boolean
   private link?: any
+  private service: string
   private sessionId: string
   private storage: SessionStorage
 
@@ -33,6 +34,7 @@ export class Anchor extends Authenticator {
     // Establish sessions for persistence
     this.anchorIsLoading = true
     this.storage = options.sessionStorage || new LocalSessionStorage();
+    this.service = options.service || 'https://cb.anchor.link';
     this.sessionId = chains[0].chainId
     this.users = []
 
@@ -57,7 +59,7 @@ export class Anchor extends Authenticator {
     this.link = new Link({
       chainId: chain.chainId,
       rpc: `${rpc.protocol}://${rpc.host}:${rpc.port}`,
-      service: 'https://cb.anchor.link',
+      service: this.service,
       transport: new BrowserTransport()
     })
 
