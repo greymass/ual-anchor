@@ -460,15 +460,16 @@ anchor-link-browser-transport@^1.0.2:
   dependencies:
     qrcode "^1.4.4"
 
-anchor-link@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-1.0.0.tgz#53c6bdb9d0ac98819ef26aaa363cb9e4770d6ded"
-  integrity sha512-AHX1BtVk6BIeKyFvbQHiv5DbS3SNvS4Wy5j7dxgqStC6HDxv6XlhAiFPFeVV7D7vbwQXAUrJ506BK+AjwxTdbw==
+anchor-link@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-1.0.3.tgz#e781b7bcd4c0ba449a128e1f2cd0c256df45fc4c"
+  integrity sha512-65Nl7jgBsHig6Hxki2vsajYlBZB7qS2ArbvpDMG97FHeJV+CcZ6JLrypbGiiFIAg0zUihLfaGWrJX8bZ5/9vqg==
   dependencies:
     eosio-signing-request "^1.1.1"
     eosjs "^20.0.0"
     eosjs-ecc "^4.0.7"
     fetch-ponyfill "^6.1.0"
+    isomorphic-ws "^4.0.1"
     pako "^1.0.10"
     uuid "^7.0.3"
     ws "^7.2.3"
@@ -1850,6 +1851,11 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
   integrity sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
+
+isomorphic-ws@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/isomorphic-ws/-/isomorphic-ws-4.0.1.tgz#55fd4cd6c5e6491e76dc125938dd863f5cd4f2dc"
+  integrity sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==
 
 isstream@~0.1.2:
   version "0.1.2"
