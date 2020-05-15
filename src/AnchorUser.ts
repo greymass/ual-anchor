@@ -1,12 +1,11 @@
 import { Chain, SignTransactionResponse, User, UALErrorType } from 'universal-authenticator-library'
-import { Api, JsonRpc } from 'eosjs'
+import { JsonRpc } from 'eosjs'
 
 import { UALAnchorError } from './UALAnchorError'
 
 export class AnchorUser extends User {
-  private api: Api
-  private authorityProvider: any
   private rpc: JsonRpc
+  private session: any
   private signatureProvider: any
 
   private chain: Chain
@@ -19,17 +18,11 @@ export class AnchorUser extends User {
     this.chain = chain
     this.accountName = session.auth.actor
     this.requestPermission = session.auth.permission
-    this.authorityProvider = session.makeAuthorityProvider()
-    this.signatureProvider = session.makeSignatureProvider()
+    this.session = session
 
     const rpcEndpoint = this.chain.rpcEndpoints[0]
     const rpcEndpointString = `${rpcEndpoint.protocol}://${rpcEndpoint.host}:${rpcEndpoint.port}`
     this.rpc = new JsonRpc(rpcEndpointString)
-    this.api = new Api({
-      authorityProvider: this.authorityProvider,
-      rpc: this.rpc,
-      signatureProvider: this.signatureProvider,
-    })
   }
 
 
@@ -38,10 +31,17 @@ export class AnchorUser extends User {
     { broadcast = true, blocksBehind = 3, expireSeconds = 30 }
   ): Promise<SignTransactionResponse> {
     try {
-      const completedTransaction = await this.api.transact(
-        transaction,
-        { broadcast, blocksBehind, expireSeconds }
-      )
+      const tx:any = {
+        broadcast,
+        blocksBehind,
+        expireSeconds,
+      }
+      if (transaction.actions.length === 1 && Object.keys(transaction).length === 1) {
+        tx.actions = transaction.actions
+      } else {
+        tx.transaction = transaction
+      }
+      const completedTransaction = await this.session.transact(tx)
       return this.returnEosjsTransaction(broadcast, completedTransaction)
     } catch (e) {
       const message = e.message ? e.message : 'Unable to sign transaction'
