@@ -3,12 +3,13 @@ import {
   UALError, UALErrorType, User
 } from 'universal-authenticator-library'
 
-import { Link, LinkSession  } from 'anchor-link'
+import AnchorLink from 'anchor-link'
 import { Name } from './interfaces'
 import { AnchorUser } from './AnchorUser'
 import { AnchorLogo } from './AnchorLogo'
 import { UALAnchorError } from './UALAnchorError'
-import BrowserTransport from 'anchor-link-browser-transport'
+import AnchorLinkBrowserTransport from 'anchor-link-browser-transport'
+import AnchorLinkLocalStoragePersist from 'anchor-link-localstorage-persist'
 
 export class Anchor extends Authenticator {
   private users: AnchorUser[] = []
@@ -17,8 +18,7 @@ export class Anchor extends Authenticator {
   private anchorIsLoading: boolean
   private link?: any
   private service: string
-  private sessionId: string
-  private storage: SessionStorage
+  private chainId: string
 
   // private session?: LinkSession;
 
@@ -33,13 +33,12 @@ export class Anchor extends Authenticator {
 
     // Establish sessions for persistence
     this.anchorIsLoading = true
-    this.storage = options.sessionStorage || new LocalSessionStorage();
+    this.chainId = chains[0].chainId
     this.service = options.service || 'https://cb.anchor.link';
-    this.sessionId = chains[0].chainId
     this.users = []
 
     if (options && options.appName) {
-      this.appName = `${options.appName}-${chains[0].chainId}`
+      this.appName = options.appName
     } else {
       throw new UALAnchorError('Anchor requires the appName property to be set on the `options` argument.',
         UALErrorType.Initialization,
@@ -56,18 +55,16 @@ export class Anchor extends Authenticator {
     // establish anchor-link
     const [chain] = this.chains
     const [rpc] = chain.rpcEndpoints
-    this.link = new Link({
-      chainId: chain.chainId,
+    this.link = new AnchorLink({
+      chainId: this.chainId,
       rpc: `${rpc.protocol}://${rpc.host}:${rpc.port}`,
       service: this.service,
-      transport: new BrowserTransport()
+      storage: new AnchorLinkLocalStoragePersist(),
+      transport: new AnchorLinkBrowserTransport({ requestStatus: false }),
     })
 
     // attempt to restore existing session
-    const session = this.storage.restore(
-      this.link,
-      this.sessionId
-    );
+    const session = await this.link.restoreSession(this.appName);
     if (session) {
       this.users = [new AnchorUser(chain, session)]
     }
@@ -171,7 +168,6 @@ export class Anchor extends Authenticator {
       if (this.users.length === 0) {
         const [chain] = this.chains
         const identity = await this.link.login(this.appName)
-        await this.storage.store(identity.session, this.sessionId);
         this.users = [new AnchorUser(chain, identity.session)]
       }
     } catch (e) {
@@ -188,7 +184,7 @@ export class Anchor extends Authenticator {
    * Logs the user out of the dapp. This will be strongly dependent on each Authenticator app's patterns.
    */
   async logout(): Promise<void>  {
-    await this.storage.remove(this.sessionId);
+    await this.link.removeSession(this.appName);
     this.reset()
   }
 
@@ -197,44 +193,5 @@ export class Anchor extends Authenticator {
    */
   public requiresGetKeyConfirmation(): boolean {
     return false
-  }
-}
-
-interface SessionStorage {
-  store(session: LinkSession, id: string, accountName?: string): Promise<void>;
-  restore(
-    link: Link,
-    id: string,
-    accountName?: string
-  ): LinkSession | null;
-  remove(id: string, accountName?: string): Promise<void>;
-}
-
-class LocalSessionStorage implements SessionStorage {
-  constructor(readonly keyPrefix: string = 'anchorlink') {}
-
-  private sessionKey(id: string, accountName?: string) {
-    return [this.keyPrefix, id, accountName]
-      .filter(v => typeof v === 'string' && v.length > 0)
-      .join('-');
-  }
-
-  async store(session: LinkSession, id: string, accountName?: string) {
-    const key = this.sessionKey(id, accountName);
-    const data = session.serialize();
-    localStorage.setItem(key, JSON.stringify(data));
-  }
-
-  restore(link: Link, id: string, accountName?: string) {
-    const key = this.sessionKey(id, accountName);
-    const data = JSON.parse(localStorage.getItem(key) || 'null');
-    if (data) {
-      return LinkSession.restore(link, data);
-    }
-    return null;
-  }
-
-  async remove(id: string, accountName?: string) {
-    localStorage.removeItem(this.sessionKey(id, accountName));
   }
 }
