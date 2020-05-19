@@ -25,24 +25,10 @@ export class AnchorUser extends User {
     this.rpc = new JsonRpc(rpcEndpointString)
   }
 
-
-  async signTransaction(
-    transaction,
-    { broadcast = true, blocksBehind = 3, expireSeconds = 30 }
-  ): Promise<SignTransactionResponse> {
+  async signTransaction(transaction, options): Promise<SignTransactionResponse> {
     try {
-      const tx:any = {
-        broadcast,
-        blocksBehind,
-        expireSeconds,
-      }
-      if (transaction.actions.length === 1 && Object.keys(transaction).length === 1) {
-        tx.actions = transaction.actions
-      } else {
-        tx.transaction = transaction
-      }
-      const completedTransaction = await this.session.transact(tx)
-      return this.returnEosjsTransaction(broadcast, completedTransaction)
+      const completedTransaction = await this.session.transact(transaction, options)
+      return this.returnEosjsTransaction(options.broadcast, completedTransaction)
     } catch (e) {
       const message = e.message ? e.message : 'Unable to sign transaction'
       const type = UALErrorType.Signing
