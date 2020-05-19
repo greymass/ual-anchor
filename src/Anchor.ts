@@ -4,23 +4,26 @@ import {
 } from 'universal-authenticator-library'
 
 import AnchorLink from 'anchor-link'
+import { JsonRpc } from 'eosjs'
 import { Name } from './interfaces'
 import { AnchorUser } from './AnchorUser'
 import { AnchorLogo } from './AnchorLogo'
 import { UALAnchorError } from './UALAnchorError'
 import AnchorLinkBrowserTransport from 'anchor-link-browser-transport'
-import AnchorLinkLocalStoragePersist from 'anchor-link-localstorage-persist'
 
 export class Anchor extends Authenticator {
+  // Storage for AnchorUser instances
   private users: AnchorUser[] = []
+  // The app name, required by anchor-link
   private appName: string
-
-  private anchorIsLoading: boolean
+  // storage for the anchor-link instance
   private link?: any
+  // a string to pass to JsonRpc or a JsonRpc instance that should be utilized
+  private rpc: string | JsonRpc
+  // the callback service url
   private service: string
+  // the chainId currently in use
   private chainId: string
-
-  // private session?: LinkSession;
 
   /**
    * Anchor Constructor.
@@ -30,19 +33,31 @@ export class Anchor extends Authenticator {
    */
   constructor(chains: Chain[], options?: any) {
     super(chains)
-
-    // Establish sessions for persistence
-    this.anchorIsLoading = true
+    // Establish initial values
     this.chainId = chains[0].chainId
     this.service = options.service || 'https://cb.anchor.link';
     this.users = []
-
+    // Determine the default rpc endpoint for this chain
+    const [chain] = chains
+    const [rpc] = chain.rpcEndpoints
+    this.rpc = `${rpc.protocol}://${rpc.host}:${rpc.port}`
+    // Ensure the appName is set properly
     if (options && options.appName) {
       this.appName = options.appName
     } else {
-      throw new UALAnchorError('Anchor requires the appName property to be set on the `options` argument.',
+      throw new UALAnchorError('ual-anchor requires the appName property to be set on the `options` argument during initialization.',
         UALErrorType.Initialization,
         null)
+    }
+    // Allow overriding the JsonRpc client
+    if (options && options.rpc) {
+      const rpc = options.rpc
+      // A hack for eosjs to resolve the "illegal invocation" errors while fetching
+      //    this can be removed in the future once the issue is resolve in anchor-link, but shouldn't cause harm in the mean time
+      if (rpc.fetchBuiltin) {
+        rpc.fetchBuiltin = rpc.fetchBuiltin.bind(window)
+      }
+      this.rpc = rpc
     }
   }
 
@@ -50,26 +65,21 @@ export class Anchor extends Authenticator {
    * Called after `shouldRender` and should be used to handle any async actions required to initialize the authenticator
    */
   async init() {
-    this.anchorIsLoading = true
-
     // establish anchor-link
-    const [chain] = this.chains
-    const [rpc] = chain.rpcEndpoints
     this.link = new AnchorLink({
       chainId: this.chainId,
-      rpc: `${rpc.protocol}://${rpc.host}:${rpc.port}`,
+      rpc: this.rpc,
       service: this.service,
-      storage: new AnchorLinkLocalStoragePersist(),
-      transport: new AnchorLinkBrowserTransport({ requestStatus: false }),
+      transport: new AnchorLinkBrowserTransport({
+        // disable browser transport UI status messages, ual has its own
+        requestStatus: false
+      }),
     })
-
-    // attempt to restore existing session
+    // attempt to restore any existing session for this app
     const session = await this.link.restoreSession(this.appName);
     if (session) {
-      this.users = [new AnchorUser(chain, session)]
+      this.users = [new AnchorUser(this.rpc, session)]
     }
-
-    this.anchorIsLoading = false
   }
 
   /**
@@ -108,7 +118,7 @@ export class Anchor extends Authenticator {
    * Returns true if the authenticator is loading while initializing its internal state.
    */
   isLoading() {
-    return this.anchorIsLoading
+    return false
   }
 
 
@@ -130,7 +140,7 @@ export class Anchor extends Authenticator {
    * ie. If your Authenticator App does not support mobile, it returns false when running in a mobile browser.
    */
   shouldRender() {
-    return this.isLoading()
+    return !this.isLoading()
   }
 
 
@@ -143,7 +153,6 @@ export class Anchor extends Authenticator {
     return this.users.length > 0
   }
 
-
   /**
    * Returns whether or not the button should show an account name input field.
    * This is for Authenticators that do not have a concept of account names.
@@ -152,23 +161,23 @@ export class Anchor extends Authenticator {
     return false
   }
 
-
   /**
    * Login using the Authenticator App. This can return one or more users depending on multiple chain support.
    *
    * @param accountName  The account name of the user for Authenticators that do not store accounts (optional)
    */
-  async login(): Promise<User[]> {
+  async login(accountName?: string): Promise<User[]> {
     if (this.chains.length > 1) {
       throw new UALAnchorError('UAL-Anchor does not yet support providing multiple chains to UAL. Please initialize the UAL provider with a single chain.',
         UALErrorType.Unsupported,
         null)
     }
     try {
+      // only call the login method if no users exist, to prevent UI from prompting for login during auto login
+      //  some changes to UAL are going to be required to support multiple users
       if (this.users.length === 0) {
-        const [chain] = this.chains
         const identity = await this.link.login(this.appName)
-        this.users = [new AnchorUser(chain, identity.session)]
+        this.users = [new AnchorUser(this.rpc, identity.session)]
       }
     } catch (e) {
       throw new UALAnchorError(
@@ -184,7 +193,13 @@ export class Anchor extends Authenticator {
    * Logs the user out of the dapp. This will be strongly dependent on each Authenticator app's patterns.
    */
   async logout(): Promise<void>  {
-    await this.link.removeSession(this.appName);
+    // retrieve the current user
+    const [user] = this.users
+    // retrieve the auth from the current user
+    const { session: { auth } } = user
+    // remove the session from anchor-link
+    await this.link.removeSession(this.appName, auth);
+    // reset the authenticator
     this.reset()
   }
 

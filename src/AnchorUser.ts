@@ -1,28 +1,24 @@
-import { Chain, SignTransactionResponse, User, UALErrorType } from 'universal-authenticator-library'
+import { SignTransactionResponse, User, UALErrorType } from 'universal-authenticator-library'
 import { JsonRpc } from 'eosjs'
 
 import { UALAnchorError } from './UALAnchorError'
 
 export class AnchorUser extends User {
   private rpc: JsonRpc
-  private session: any
+  public session: any
   private signatureProvider: any
 
-  private chain: Chain
+  private chainId: string
   private accountName: string = ''
   private requestPermission: string = ''
 
-  constructor(chain, session) {
+  constructor(rpc, session) {
     super()
-
-    this.chain = chain
+    this.chainId = session.link.chainId
     this.accountName = session.auth.actor
     this.requestPermission = session.auth.permission
     this.session = session
-
-    const rpcEndpoint = this.chain.rpcEndpoints[0]
-    const rpcEndpointString = `${rpcEndpoint.protocol}://${rpcEndpoint.host}:${rpcEndpoint.port}`
-    this.rpc = new JsonRpc(rpcEndpointString)
+    this.rpc = rpc
   }
 
   async signTransaction(transaction, options): Promise<SignTransactionResponse> {
@@ -58,7 +54,7 @@ export class AnchorUser extends User {
   }
 
   async getChainId() {
-    return this.chain.chainId
+    return this.chainId
   }
 
   async getKeys() {
