@@ -166,7 +166,7 @@ export class Anchor extends Authenticator {
    *
    * @param accountName  The account name of the user for Authenticators that do not store accounts (optional)
    */
-  async login(accountName?: string): Promise<User[]> {
+  async login(): Promise<User[]> {
     if (this.chains.length > 1) {
       throw new UALAnchorError('UAL-Anchor does not yet support providing multiple chains to UAL. Please initialize the UAL provider with a single chain.',
         UALErrorType.Unsupported,
