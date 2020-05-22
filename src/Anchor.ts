@@ -12,14 +12,14 @@ import { UALAnchorError } from './UALAnchorError'
 import AnchorLinkBrowserTransport from 'anchor-link-browser-transport'
 
 export class Anchor extends Authenticator {
+  // a JsonRpc instance that can be utilized
+  public rpc: JsonRpc
   // Storage for AnchorUser instances
   private users: AnchorUser[] = []
   // The app name, required by anchor-link
   private appName: string
   // storage for the anchor-link instance
   private link?: any
-  // a string to pass to JsonRpc or a JsonRpc instance that should be utilized
-  private rpc: string | JsonRpc
   // the callback service url
   private service: string
   // the chainId currently in use
@@ -40,7 +40,6 @@ export class Anchor extends Authenticator {
     // Determine the default rpc endpoint for this chain
     const [chain] = chains
     const [rpc] = chain.rpcEndpoints
-    this.rpc = `${rpc.protocol}://${rpc.host}:${rpc.port}`
     // Ensure the appName is set properly
     if (options && options.appName) {
       this.appName = options.appName
@@ -49,15 +48,12 @@ export class Anchor extends Authenticator {
         UALErrorType.Initialization,
         null)
     }
-    // Allow overriding the JsonRpc client
+    // Allow overriding the JsonRpc client via options
     if (options && options.rpc) {
-      const rpc = options.rpc
-      // A hack for eosjs to resolve the "illegal invocation" errors while fetching
-      //    this can be removed in the future once the issue is resolve in anchor-link, but shouldn't cause harm in the mean time
-      if (rpc.fetchBuiltin) {
-        rpc.fetchBuiltin = rpc.fetchBuiltin.bind(window)
-      }
-      this.rpc = rpc
+      this.rpc = options.rpc
+    } else {
+      // otherwise just return a generic rpc instance for this endpoint
+      this.rpc = new JsonRpc(`${rpc.protocol}://${rpc.host}:${rpc.port}`)
     }
   }
 

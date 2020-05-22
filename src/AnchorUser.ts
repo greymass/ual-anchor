@@ -4,7 +4,7 @@ import { JsonRpc } from 'eosjs'
 import { UALAnchorError } from './UALAnchorError'
 
 export class AnchorUser extends User {
-  private rpc: JsonRpc
+  public rpc: JsonRpc
   public session: any
   private signatureProvider: any
 
