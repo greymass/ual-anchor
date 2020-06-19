@@ -11,6 +11,19 @@ import { AnchorLogo } from './AnchorLogo'
 import { UALAnchorError } from './UALAnchorError'
 import AnchorLinkBrowserTransport from 'anchor-link-browser-transport'
 
+export interface UALAnchorOptions {
+  // The app name, required by anchor-link. Short string identifying the app
+  appName: string
+  // Either a JsonRpc instance from eosjs or the url for an API to connect a new JsonRpc instance to
+  rpc?: JsonRpc
+  // The callback service URL to use, defaults to https://cb.anchor.link
+  service?: string
+  // A flag to disable the Greymass Fuel integration, defaults to false (enabled)
+  disableGreymassFuel?: boolean
+  // A flag to enable the Anchor Link UI request status, defaults to false (disabled)
+  requestStatus?: boolean
+}
+
 export class Anchor extends Authenticator {
   // a JsonRpc instance that can be utilized
   public rpc: JsonRpc
@@ -20,10 +33,14 @@ export class Anchor extends Authenticator {
   private appName: string
   // storage for the anchor-link instance
   private link?: any
-  // the callback service url
-  private service: string
+  // the callback service url, defaults to https://cb.anchor.link
+  private service: string = 'https://cb.anchor.link'
   // the chainId currently in use
   private chainId: string
+  // disable Greymass Fuel cosigning, defaults to false
+  private disableGreymassFuel: boolean = false
+  // display the request status returned by anchor-link, defaults to false (ual has it's own)
+  private requestStatus: boolean = false
 
   /**
    * Anchor Constructor.
@@ -31,11 +48,10 @@ export class Anchor extends Authenticator {
    * @param chains
    * @param options { appName } appName is a required option to use Scatter
    */
-  constructor(chains: Chain[], options?: any) {
+  constructor(chains: Chain[], options?: UALAnchorOptions) {
     super(chains)
     // Establish initial values
     this.chainId = chains[0].chainId
-    this.service = options.service || 'https://cb.anchor.link';
     this.users = []
     // Determine the default rpc endpoint for this chain
     const [chain] = chains
@@ -55,6 +71,18 @@ export class Anchor extends Authenticator {
       // otherwise just return a generic rpc instance for this endpoint
       this.rpc = new JsonRpc(`${rpc.protocol}://${rpc.host}:${rpc.port}`)
     }
+    // Allow passing a custom service URL to process callbacks
+    if (options.service) {
+      this.service = options.service;
+    }
+    // Allow passing of disable flag for Greymass Fuel
+    if (options && options.disableGreymassFuel) {
+      this.disableGreymassFuel = options.disableGreymassFuel
+    }
+    // Allow passing of disable flag for resulting request status
+    if (options && options.requestStatus) {
+      this.requestStatus = options.requestStatus
+    }
   }
 
   /**
@@ -67,8 +95,10 @@ export class Anchor extends Authenticator {
       rpc: this.rpc,
       service: this.service,
       transport: new AnchorLinkBrowserTransport({
-        // disable browser transport UI status messages, ual has its own
-        requestStatus: false
+        // default: disable browser transport UI status messages, ual has its own
+        requestStatus: this.requestStatus,
+        // default: do not disable fuel by default
+        disableGreymassFuel: this.disableGreymassFuel,
       }),
     })
     // attempt to restore any existing session for this app
