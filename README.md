@@ -17,7 +17,7 @@ You must use one of the UAL renderers below.
 React - `ual-reactjs-renderer`
 PlainJS - `ual-plainjs-renderer`
 
-#### Basic Usage with React
+#### Basic usage and configuration with React
 
 ```javascript
 import { Anchor } from 'ual-anchor'
@@ -35,7 +35,18 @@ const exampleNet = {
 const App = (props) => <div>{JSON.stringify(props.ual)}</div>
 const AppWithUAL = withUAL(App)
 
-const anchor = new Anchor([exampleNet], { appName: 'Example App' })
+const anchor = new Anchor([exampleNet], {
+  // Required: The app name, required by anchor-link. Short string identifying the app
+  appName: 'Example App',
+  // Optional: a JsonRpc instance from eosjs to use internally
+  rpc: new JsonRpc(),
+  // Optional: The callback service URL to use, defaults to https://cb.anchor.link
+  service: 'https://cb.anchor.link',
+  // Optional: A flag to disable the Greymass Fuel integration, defaults to false (enabled)
+  disableGreymassFuel: false,
+  // Optional: A flag to enable the Anchor Link UI request status, defaults to false (disabled)
+  requestStatus: false,  
+})
 
 <UALProvider chains={[exampleNet]} authenticators={[anchor]}>
   <AppWithUAL />
