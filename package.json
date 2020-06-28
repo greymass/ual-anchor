@@ -1,6 +1,6 @@
 {
   "name": "ual-anchor",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "main": "dist/index.js",
   "license": "MIT",
   "author": {
@@ -23,7 +23,7 @@
     "anchor-link-browser-transport": "^2.1.0",
     "elliptic": "6.5.2",
     "eosjs": "^20.0.3",
-    "universal-authenticator-library": "0.2.0"
+    "universal-authenticator-library": "0.3.0"
   },
   "resolutions": {
     "cache-base": "4.0.0"

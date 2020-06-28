@@ -147,6 +147,9 @@ export class Anchor extends Authenticator {
     return false
   }
 
+  getName() {
+    return 'anchor'
+  }
 
   /**
    * Returns the style of the Button that will be rendered.
