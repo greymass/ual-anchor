@@ -24,7 +24,7 @@ export class AnchorUser extends User {
   async signTransaction(transaction, options): Promise<SignTransactionResponse> {
     try {
       const completedTransaction = await this.session.transact(transaction, options)
-      return this.returnEosjsTransaction(options.broadcast, completedTransaction)
+      return this.returnEosjsTransaction(options.broadcast, {transaction_id: completedTransaction.processed.id, ...completedTransaction})
     } catch (e) {
       const message = e.message ? e.message : 'Unable to sign transaction'
       const type = UALErrorType.Signing
