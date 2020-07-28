@@ -6,16 +6,30 @@ import { UALAnchorError } from './UALAnchorError'
 export class AnchorUser extends User {
   public rpc: JsonRpc
   public session: any
-  private signatureProvider: any
 
+  public signerKey?: string
+  public signerProof?: string
+  public signerRequest?: any
+
+  private signatureProvider: any
   private chainId: string
   private accountName: string = ''
   private requestPermission: string = ''
 
-  constructor(rpc, session) {
+  constructor(rpc, identity) {
     super()
-    this.chainId = session.link.chainId
+    const { session } = identity
     this.accountName = session.auth.actor
+    this.chainId = session.link.chainId
+    if (identity.signatures) {
+      [this.signerProof] = identity.signatures
+    }
+    if (identity.signerKey) {
+      this.signerKey = identity.signerKey
+    }
+    if (identity.serializedTransaction) {
+      this.signerRequest = identity.serializedTransaction
+    }
     this.requestPermission = session.auth.permission
     this.session = session
     this.rpc = rpc
