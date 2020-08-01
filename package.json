@@ -21,7 +21,7 @@
   "dependencies": {
     "anchor-link": "^2.1.0",
     "anchor-link-browser-transport": "^2.1.0",
-    "elliptic": "6.5.2",
+    "elliptic": "6.5.3",
     "eosjs": "^20.0.3",
     "universal-authenticator-library": "0.3.0"
   },
