@@ -73,7 +73,7 @@ export class Anchor extends Authenticator {
     }
     // Allow passing a custom service URL to process callbacks
     if (options.service) {
-      this.service = options.service;
+      this.service = options.service
     }
     // Allow passing of disable flag for Greymass Fuel
     if (options && options.disableGreymassFuel) {
@@ -88,7 +88,7 @@ export class Anchor extends Authenticator {
   /**
    * Called after `shouldRender` and should be used to handle any async actions required to initialize the authenticator
    */
-  async init() {
+  public async init() {
     // establish anchor-link
     this.link = new AnchorLink({
       chainId: this.chainId,
@@ -102,7 +102,7 @@ export class Anchor extends Authenticator {
       }),
     })
     // attempt to restore any existing session for this app
-    const session = await this.link.restoreSession(this.appName);
+    const session = await this.link.restoreSession(this.appName)
     if (session) {
       this.users = [new AnchorUser(this.rpc, { session })]
     }
@@ -111,18 +111,16 @@ export class Anchor extends Authenticator {
   /**
    * Resets the authenticator to its initial, default state then calls `init` method
    */
-  reset() {
+  public reset() {
     this.users = []
   }
-
 
   /**
    * Returns true if the authenticator has errored while initializing.
    */
-  isErrored() {
+  public isErrored() {
     return false
   }
-
 
   /**
    * Returns a URL where the user can download and install the underlying authenticator
@@ -135,50 +133,47 @@ export class Anchor extends Authenticator {
   /**
    * Returns error (if available) if the authenticator has errored while initializing.
    */
-  getError(): UALError | null {
+  public getError(): UALError | null {
     return null
   }
-
 
   /**
    * Returns true if the authenticator is loading while initializing its internal state.
    */
-  isLoading() {
+  public isLoading() {
     return false
   }
 
-  getName() {
+  public getName() {
     return 'anchor'
   }
 
   /**
    * Returns the style of the Button that will be rendered.
    */
-   getStyle(): ButtonStyle {
-     return {
-       icon: AnchorLogo,
-       text: Name,
-       textColor: 'white',
-       background: '#3650A2'
-     }
-   }
-
+  public getStyle(): ButtonStyle {
+    return {
+      icon: AnchorLogo,
+      text: Name,
+      textColor: 'white',
+      background: '#3650A2'
+    }
+  }
 
   /**
    * Returns whether or not the button should render based on the operating environment and other factors.
    * ie. If your Authenticator App does not support mobile, it returns false when running in a mobile browser.
    */
-  shouldRender() {
+  public shouldRender() {
     return !this.isLoading()
   }
-
 
   /**
    * Returns whether or not the dapp should attempt to auto login with the Authenticator app.
    * Auto login will only occur when there is only one Authenticator that returns shouldRender() true and
    * shouldAutoLogin() true.
    */
-  shouldAutoLogin() {
+  public shouldAutoLogin() {
     return this.users.length > 0
   }
 
@@ -195,7 +190,7 @@ export class Anchor extends Authenticator {
    *
    * @param accountName  The account name of the user for Authenticators that do not store accounts (optional)
    */
-  async login(): Promise<User[]> {
+  public async login(): Promise<User[]> {
     if (this.chains.length > 1) {
       throw new UALAnchorError('UAL-Anchor does not yet support providing multiple chains to UAL. Please initialize the UAL provider with a single chain.',
         UALErrorType.Unsupported,
@@ -217,17 +212,16 @@ export class Anchor extends Authenticator {
     return this.users
   }
 
-
   /**
    * Logs the user out of the dapp. This will be strongly dependent on each Authenticator app's patterns.
    */
-  async logout(): Promise<void>  {
+  public async logout(): Promise<void>  {
     // retrieve the current user
     const [user] = this.users
     // retrieve the auth from the current user
     const { session: { auth } } = user
     // remove the session from anchor-link
-    await this.link.removeSession(this.appName, auth);
+    await this.link.removeSession(this.appName, auth)
     // reset the authenticator
     this.reset()
   }

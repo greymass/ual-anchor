@@ -35,7 +35,7 @@ export class AnchorUser extends User {
     this.rpc = rpc
   }
 
-  async signTransaction(transaction, options): Promise<SignTransactionResponse> {
+  public async signTransaction(transaction, options): Promise<SignTransactionResponse> {
     try {
       const completedTransaction = await this.session.transact(transaction, options)
       const wasBroadcast = (options.broadcast !== false)
@@ -51,29 +51,29 @@ export class AnchorUser extends User {
     }
   }
 
-  async signArbitrary(publicKey: string, data: string, _: string): Promise<string> {
+  public async signArbitrary(publicKey: string, data: string, _: string): Promise<string> {
     throw new UALAnchorError(
       `Anchor does not currently support signArbitrary`,
       UALErrorType.Unsupported,
       null)
   }
 
-  async verifyKeyOwnership(challenge: string): Promise<boolean> {
+  public async verifyKeyOwnership(challenge: string): Promise<boolean> {
     throw new UALAnchorError(
       `Anchor does not currently support verifyKeyOwnership`,
       UALErrorType.Unsupported,
       null)
   }
 
-  async getAccountName() {
+  public async getAccountName() {
     return this.accountName
   }
 
-  async getChainId() {
+  public async getChainId() {
     return this.chainId
   }
 
-  async getKeys() {
+  public async getKeys() {
     try {
       const keys = await this.signatureProvider.getAvailableKeys(this.requestPermission)
       return keys
@@ -86,7 +86,7 @@ export class AnchorUser extends User {
     }
   }
 
-  async isAccountValid() {
+  public async isAccountValid() {
     try {
       const account = this.rpc && await this.rpc.get_account(this.accountName)
       const actualKeys = this.extractAccountKeys(account)
@@ -107,7 +107,7 @@ export class AnchorUser extends User {
     }
   }
 
-  extractAccountKeys(account) {
+  public extractAccountKeys(account) {
     const keySubsets = account.permissions.map((permission) => permission.required_auth.keys.map((key) => key.key))
     let keys = []
     for (const keySubset of keySubsets) {
