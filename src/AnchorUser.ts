@@ -52,7 +52,6 @@ export class AnchorUser extends User {
   }
 
   async signArbitrary(publicKey: string, data: string, _: string): Promise<string> {
-    console.log("signArbitrary", publicKey, data)
     throw new UALAnchorError(
       `Anchor does not currently support signArbitrary`,
       UALErrorType.Unsupported,
@@ -60,7 +59,6 @@ export class AnchorUser extends User {
   }
 
   async verifyKeyOwnership(challenge: string): Promise<boolean> {
-    console.log("verifyKeyOwnership", challenge)
     throw new UALAnchorError(
       `Anchor does not currently support verifyKeyOwnership`,
       UALErrorType.Unsupported,
@@ -76,7 +74,6 @@ export class AnchorUser extends User {
   }
 
   async getKeys() {
-    console.log("getKeys")
     try {
       const keys = await this.signatureProvider.getAvailableKeys(this.requestPermission)
       return keys
@@ -90,7 +87,6 @@ export class AnchorUser extends User {
   }
 
   async isAccountValid() {
-    console.log("isAccountValid")
     try {
       const account = this.rpc && await this.rpc.get_account(this.accountName)
       const actualKeys = this.extractAccountKeys(account)
@@ -112,7 +108,6 @@ export class AnchorUser extends User {
   }
 
   extractAccountKeys(account) {
-    console.log("extractAccountKeys", account)
     const keySubsets = account.permissions.map((permission) => permission.required_auth.keys.map((key) => key.key))
     let keys = []
     for (const keySubset of keySubsets) {
