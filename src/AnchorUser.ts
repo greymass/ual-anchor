@@ -53,14 +53,14 @@ export class AnchorUser extends User {
 
   public async signArbitrary(publicKey: string, data: string, _: string): Promise<string> {
     throw new UALAnchorError(
-      `Anchor does not currently support signArbitrary`,
+      `Anchor does not currently support signArbitrary(${publicKey}, ${data})`,
       UALErrorType.Unsupported,
       null)
   }
 
   public async verifyKeyOwnership(challenge: string): Promise<boolean> {
     throw new UALAnchorError(
-      `Anchor does not currently support verifyKeyOwnership`,
+      `Anchor does not currently support verifyKeyOwnership(${challenge})`,
       UALErrorType.Unsupported,
       null)
   }
