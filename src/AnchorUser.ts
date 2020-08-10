@@ -6,16 +6,30 @@ import { UALAnchorError } from './UALAnchorError'
 export class AnchorUser extends User {
   public rpc: JsonRpc
   public session: any
-  private signatureProvider: any
 
+  public signerKey?: string
+  public signerProof?: string
+  public signerRequest?: any
+
+  private signatureProvider: any
   private chainId: string
   private accountName: string = ''
   private requestPermission: string = ''
 
-  constructor(rpc, session) {
+  constructor(rpc, identity) {
     super()
-    this.chainId = session.link.chainId
+    const { session } = identity
     this.accountName = session.auth.actor
+    this.chainId = session.link.chainId
+    if (identity.signatures) {
+      [this.signerProof] = identity.signatures
+    }
+    if (identity.signerKey) {
+      this.signerKey = identity.signerKey
+    }
+    if (identity.serializedTransaction) {
+      this.signerRequest = identity.serializedTransaction
+    }
     this.requestPermission = session.auth.permission
     this.session = session
     this.rpc = rpc
@@ -38,7 +52,6 @@ export class AnchorUser extends User {
   }
 
   async signArbitrary(publicKey: string, data: string, _: string): Promise<string> {
-    console.log("signArbitrary", publicKey, data)
     throw new UALAnchorError(
       `Anchor does not currently support signArbitrary`,
       UALErrorType.Unsupported,
@@ -46,7 +59,6 @@ export class AnchorUser extends User {
   }
 
   async verifyKeyOwnership(challenge: string): Promise<boolean> {
-    console.log("verifyKeyOwnership", challenge)
     throw new UALAnchorError(
       `Anchor does not currently support verifyKeyOwnership`,
       UALErrorType.Unsupported,
@@ -62,7 +74,6 @@ export class AnchorUser extends User {
   }
 
   async getKeys() {
-    console.log("getKeys")
     try {
       const keys = await this.signatureProvider.getAvailableKeys(this.requestPermission)
       return keys
@@ -76,7 +87,6 @@ export class AnchorUser extends User {
   }
 
   async isAccountValid() {
-    console.log("isAccountValid")
     try {
       const account = this.rpc && await this.rpc.get_account(this.accountName)
       const actualKeys = this.extractAccountKeys(account)
@@ -98,7 +108,6 @@ export class AnchorUser extends User {
   }
 
   extractAccountKeys(account) {
-    console.log("extractAccountKeys", account)
     const keySubsets = account.permissions.map((permission) => permission.required_auth.keys.map((key) => key.key))
     let keys = []
     for (const keySubset of keySubsets) {

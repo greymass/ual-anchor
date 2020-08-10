@@ -104,7 +104,7 @@ export class Anchor extends Authenticator {
     // attempt to restore any existing session for this app
     const session = await this.link.restoreSession(this.appName);
     if (session) {
-      this.users = [new AnchorUser(this.rpc, session)]
+      this.users = [new AnchorUser(this.rpc, { session })]
     }
   }
 
@@ -206,7 +206,7 @@ export class Anchor extends Authenticator {
       //  some changes to UAL are going to be required to support multiple users
       if (this.users.length === 0) {
         const identity = await this.link.login(this.appName)
-        this.users = [new AnchorUser(this.rpc, identity.session)]
+        this.users = [new AnchorUser(this.rpc, identity)]
       }
     } catch (e) {
       throw new UALAnchorError(
