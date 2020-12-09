@@ -5,6 +5,7 @@ import {
 
 import AnchorLink from 'anchor-link'
 import { JsonRpc } from 'eosjs'
+import { APIClient, FetchProvider } from '@greymass/eosio'
 import { Name } from './interfaces'
 import { AnchorUser } from './AnchorUser'
 import { AnchorLogo } from './AnchorLogo'
@@ -14,6 +15,8 @@ import AnchorLinkBrowserTransport from 'anchor-link-browser-transport'
 export interface UALAnchorOptions {
   // The app name, required by anchor-link. Short string identifying the app
   appName: string
+  // A APIClient object from @greymass/eosio. If not specified, it'll be created using the JsonRpc endpoint
+  client?: APIClient
   // Either a JsonRpc instance from eosjs or the url for an API to connect a new JsonRpc instance to
   rpc?: JsonRpc
   // The callback service URL to use, defaults to https://cb.anchor.link
@@ -27,6 +30,8 @@ export interface UALAnchorOptions {
 export class Anchor extends Authenticator {
   // a JsonRpc instance that can be utilized
   public rpc: JsonRpc
+  // a APIClient instance that can be utilized
+  public client: APIClient
   // Storage for AnchorUser instances
   private users: AnchorUser[] = []
   // The app name, required by anchor-link
@@ -71,6 +76,13 @@ export class Anchor extends Authenticator {
       // otherwise just return a generic rpc instance for this endpoint
       this.rpc = new JsonRpc(`${rpc.protocol}://${rpc.host}:${rpc.port}`)
     }
+    // Allow overriding the APIClient via options
+    if (options && options.client) {
+      this.client = options.client
+    } else {
+      const provider = new FetchProvider(`${rpc.protocol}://${rpc.host}:${rpc.port}`)
+      this.client = new APIClient({ provider })
+    }
     // Allow passing a custom service URL to process callbacks
     if (options.service) {
       this.service = options.service
@@ -92,7 +104,6 @@ export class Anchor extends Authenticator {
     // establish anchor-link
     this.link = new AnchorLink({
       chainId: this.chainId,
-      rpc: this.rpc,
       service: this.service,
       transport: new AnchorLinkBrowserTransport({
         // default: disable browser transport UI status messages, ual has its own
@@ -104,7 +115,7 @@ export class Anchor extends Authenticator {
     // attempt to restore any existing session for this app
     const session = await this.link.restoreSession(this.appName)
     if (session) {
-      this.users = [new AnchorUser(this.rpc, { session })]
+      this.users = [new AnchorUser(this.rpc, this.client, { session })]
     }
   }
 
@@ -201,7 +212,7 @@ export class Anchor extends Authenticator {
       //  some changes to UAL are going to be required to support multiple users
       if (this.users.length === 0) {
         const identity = await this.link.login(this.appName)
-        this.users = [new AnchorUser(this.rpc, identity)]
+        this.users = [new AnchorUser(this.rpc, this.client, identity)]
       }
     } catch (e) {
       throw new UALAnchorError(
