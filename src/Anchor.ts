@@ -103,7 +103,10 @@ export class Anchor extends Authenticator {
   public async init() {
     // establish anchor-link
     this.link = new AnchorLink({
-      chainId: this.chainId,
+      chains: [{
+        chainId: this.chainId,
+        nodeUrl: this.client,
+      }],
       service: this.service,
       transport: new AnchorLinkBrowserTransport({
         // default: disable browser transport UI status messages, ual has its own
