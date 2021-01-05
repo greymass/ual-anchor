@@ -21,7 +21,7 @@ export class AnchorUser extends User {
     super()
     const { session } = identity
     this.accountName = String(session.auth.actor)
-    this.chainId = String(session.link.chainId)
+    this.chainId = String(session.chainId)
     if (identity.signatures) {
       [this.signerProof] = identity.signatures
     }
