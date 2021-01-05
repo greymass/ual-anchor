@@ -1,5 +1,5 @@
 import { SignTransactionResponse, User, UALErrorType } from 'universal-authenticator-library'
-import { APIClient } from '@greymass/eosio'
+import { APIClient, PackedTransaction, SignedTransaction } from '@greymass/eosio'
 import { JsonRpc } from 'eosjs'
 import { UALAnchorError } from './UALAnchorError'
 
@@ -37,13 +37,20 @@ export class AnchorUser extends User {
     this.rpc = rpc
   }
 
+  objectify(data: any) {
+    return JSON.parse(JSON.stringify(data))
+  }
+
   public async signTransaction(transaction, options): Promise<SignTransactionResponse> {
     try {
       const completedTransaction = await this.session.transact(transaction, options)
       const wasBroadcast = (options.broadcast !== false)
+      const serializedTransaction = PackedTransaction.fromSigned(SignedTransaction.from(completedTransaction.transaction))
       return this.returnEosjsTransaction(wasBroadcast, {
+        ...completedTransaction,
         transaction_id: completedTransaction.payload.tx,
-        ...completedTransaction
+        serializedTransaction: serializedTransaction.packed_trx.array,
+        signatures: this.objectify(completedTransaction.signatures),
       })
     } catch (e) {
       const message = e.message ? e.message : 'Unable to sign transaction'
