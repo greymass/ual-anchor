@@ -235,7 +235,7 @@ export class Anchor extends Authenticator {
     // retrieve the auth from the current user
     const { session: { auth } } = user
     // remove the session from anchor-link
-    await this.link.removeSession(this.appName, auth)
+    await this.link.removeSession(this.appName, auth, this.chainId)
     // reset the authenticator
     this.reset()
   }
