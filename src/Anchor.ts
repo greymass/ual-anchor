@@ -25,6 +25,8 @@ export interface UALAnchorOptions {
   disableGreymassFuel?: boolean
   // A flag to enable the Anchor Link UI request status, defaults to false (disabled)
   requestStatus?: boolean
+  // An account name to use as the referral account for Fuel
+  fuelReferrer?: string
 }
 
 export class Anchor extends Authenticator {
@@ -46,6 +48,8 @@ export class Anchor extends Authenticator {
   private disableGreymassFuel: boolean = false
   // display the request status returned by anchor-link, defaults to false (ual has it's own)
   private requestStatus: boolean = false
+  // The referral account used in Fuel transactions
+  private fuelReferrer: string = 'teamgreymass'
 
   /**
    * Anchor Constructor.
@@ -95,6 +99,10 @@ export class Anchor extends Authenticator {
     if (options && options.requestStatus) {
       this.requestStatus = options.requestStatus
     }
+    // Allow specifying a Fuel referral account
+    if (options && options.fuelReferrer) {
+      this.fuelReferrer = options.fuelReferrer
+    }
   }
 
   /**
@@ -113,6 +121,8 @@ export class Anchor extends Authenticator {
         requestStatus: this.requestStatus,
         // default: do not disable fuel by default
         disableGreymassFuel: this.disableGreymassFuel,
+        // default: use the teamgreymass account
+        fuelReferrer: this.fuelReferrer,
       }),
     })
     // attempt to restore any existing session for this app
