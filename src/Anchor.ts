@@ -27,6 +27,8 @@ export interface UALAnchorOptions {
   requestStatus?: boolean
   // An account name to use as the referral account for Fuel
   fuelReferrer?: string
+  // Whether anchor-link should be configured to verify identity proofs in the browser for the app
+  verifyProofs?: boolean
 }
 
 export class Anchor extends Authenticator {
@@ -50,6 +52,8 @@ export class Anchor extends Authenticator {
   private requestStatus: boolean = false
   // The referral account used in Fuel transactions
   private fuelReferrer: string = 'teamgreymass'
+  // Whether anchor-link should be configured to verify identity proofs in the browser for the app
+  private verifyProofs: boolean = false
 
   /**
    * Anchor Constructor.
@@ -103,6 +107,10 @@ export class Anchor extends Authenticator {
     if (options && options.fuelReferrer) {
       this.fuelReferrer = options.fuelReferrer
     }
+    // Allow overriding the proof verification option
+    if (options && options.verifyProofs) {
+      this.verifyProofs = options.verifyProofs
+    }
   }
 
   /**
@@ -117,13 +125,11 @@ export class Anchor extends Authenticator {
       }],
       service: this.service,
       transport: new AnchorLinkBrowserTransport({
-        // default: disable browser transport UI status messages, ual has its own
         requestStatus: this.requestStatus,
-        // default: do not disable fuel by default
         disableGreymassFuel: this.disableGreymassFuel,
-        // default: use the teamgreymass account
         fuelReferrer: this.fuelReferrer,
       }),
+      verifyProofs: this.verifyProofs,
     })
     // attempt to restore any existing session for this app
     const session = await this.link.restoreSession(this.appName)
