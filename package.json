@@ -1,6 +1,6 @@
 {
   "name": "ual-anchor",
-  "version": "1.0.0-rc.6",
+  "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
   "author": {
@@ -21,7 +21,7 @@
   "dependencies": {
     "@greymass/eosio": "^0.2.5",
     "anchor-link": "^3.0.3",
-    "anchor-link-browser-transport": "^3.0.0-rc.10",
+    "anchor-link-browser-transport": "^3.0.0",
     "elliptic": "6.5.2",
     "eosjs": "^20.0.3",
     "universal-authenticator-library": "0.3.0"
