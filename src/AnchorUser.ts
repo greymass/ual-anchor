@@ -1,9 +1,10 @@
 import { SignTransactionResponse, User, UALErrorType } from 'universal-authenticator-library'
+import { APIClient, PackedTransaction, SignedTransaction } from '@greymass/eosio'
 import { JsonRpc } from 'eosjs'
-
 import { UALAnchorError } from './UALAnchorError'
 
 export class AnchorUser extends User {
+  public client: APIClient
   public rpc: JsonRpc
   public session: any
 
@@ -16,32 +17,40 @@ export class AnchorUser extends User {
   private accountName: string = ''
   private requestPermission: string = ''
 
-  constructor(rpc, identity) {
+  constructor(rpc, client, identity) {
     super()
     const { session } = identity
-    this.accountName = session.auth.actor
-    this.chainId = session.link.chainId
+    this.accountName = String(session.auth.actor)
+    this.chainId = String(session.chainId)
     if (identity.signatures) {
       [this.signerProof] = identity.signatures
     }
     if (identity.signerKey) {
       this.signerKey = identity.signerKey
     }
-    if (identity.serializedTransaction) {
-      this.signerRequest = identity.serializedTransaction
+    if (identity.resolvedTransaction) {
+      this.signerRequest = identity.transaction
     }
-    this.requestPermission = session.auth.permission
+    this.requestPermission = String(session.auth.permission)
     this.session = session
+    this.client = client
     this.rpc = rpc
+  }
+
+  objectify(data: any) {
+    return JSON.parse(JSON.stringify(data))
   }
 
   public async signTransaction(transaction, options): Promise<SignTransactionResponse> {
     try {
       const completedTransaction = await this.session.transact(transaction, options)
       const wasBroadcast = (options.broadcast !== false)
+      const serializedTransaction = PackedTransaction.fromSigned(SignedTransaction.from(completedTransaction.transaction))
       return this.returnEosjsTransaction(wasBroadcast, {
+        ...completedTransaction,
         transaction_id: completedTransaction.payload.tx,
-        ...completedTransaction
+        serializedTransaction: serializedTransaction.packed_trx.array,
+        signatures: this.objectify(completedTransaction.signatures),
       })
     } catch (e) {
       const message = e.message ? e.message : 'Unable to sign transaction'
@@ -88,7 +97,7 @@ export class AnchorUser extends User {
 
   public async isAccountValid() {
     try {
-      const account = this.rpc && await this.rpc.get_account(this.accountName)
+      const account = this.client && await this.client.v1.chain.get_account(this.accountName)
       const actualKeys = this.extractAccountKeys(account)
       const authorizationKeys = await this.getKeys()
 

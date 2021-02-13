@@ -5,6 +5,7 @@ import {
 
 import AnchorLink from 'anchor-link'
 import { JsonRpc } from 'eosjs'
+import { APIClient, FetchProvider } from '@greymass/eosio'
 import { Name } from './interfaces'
 import { AnchorUser } from './AnchorUser'
 import { AnchorLogo } from './AnchorLogo'
@@ -14,6 +15,8 @@ import AnchorLinkBrowserTransport from 'anchor-link-browser-transport'
 export interface UALAnchorOptions {
   // The app name, required by anchor-link. Short string identifying the app
   appName: string
+  // A APIClient object from @greymass/eosio. If not specified, it'll be created using the JsonRpc endpoint
+  client?: APIClient
   // Either a JsonRpc instance from eosjs or the url for an API to connect a new JsonRpc instance to
   rpc?: JsonRpc
   // The callback service URL to use, defaults to https://cb.anchor.link
@@ -22,11 +25,17 @@ export interface UALAnchorOptions {
   disableGreymassFuel?: boolean
   // A flag to enable the Anchor Link UI request status, defaults to false (disabled)
   requestStatus?: boolean
+  // An account name to use as the referral account for Fuel
+  fuelReferrer?: string
+  // Whether anchor-link should be configured to verify identity proofs in the browser for the app
+  verifyProofs?: boolean
 }
 
 export class Anchor extends Authenticator {
   // a JsonRpc instance that can be utilized
   public rpc: JsonRpc
+  // a APIClient instance that can be utilized
+  public client: APIClient
   // Storage for AnchorUser instances
   private users: AnchorUser[] = []
   // The app name, required by anchor-link
@@ -41,6 +50,10 @@ export class Anchor extends Authenticator {
   private disableGreymassFuel: boolean = false
   // display the request status returned by anchor-link, defaults to false (ual has it's own)
   private requestStatus: boolean = false
+  // The referral account used in Fuel transactions
+  private fuelReferrer: string = 'teamgreymass'
+  // Whether anchor-link should be configured to verify identity proofs in the browser for the app
+  private verifyProofs: boolean = false
 
   /**
    * Anchor Constructor.
@@ -71,6 +84,13 @@ export class Anchor extends Authenticator {
       // otherwise just return a generic rpc instance for this endpoint
       this.rpc = new JsonRpc(`${rpc.protocol}://${rpc.host}:${rpc.port}`)
     }
+    // Allow overriding the APIClient via options
+    if (options && options.client) {
+      this.client = options.client
+    } else {
+      const provider = new FetchProvider(`${rpc.protocol}://${rpc.host}:${rpc.port}`)
+      this.client = new APIClient({ provider })
+    }
     // Allow passing a custom service URL to process callbacks
     if (options.service) {
       this.service = options.service
@@ -83,6 +103,14 @@ export class Anchor extends Authenticator {
     if (options && options.requestStatus) {
       this.requestStatus = options.requestStatus
     }
+    // Allow specifying a Fuel referral account
+    if (options && options.fuelReferrer) {
+      this.fuelReferrer = options.fuelReferrer
+    }
+    // Allow overriding the proof verification option
+    if (options && options.verifyProofs) {
+      this.verifyProofs = options.verifyProofs
+    }
   }
 
   /**
@@ -91,20 +119,22 @@ export class Anchor extends Authenticator {
   public async init() {
     // establish anchor-link
     this.link = new AnchorLink({
-      chainId: this.chainId,
-      rpc: this.rpc,
+      chains: [{
+        chainId: this.chainId,
+        nodeUrl: this.client,
+      }],
       service: this.service,
       transport: new AnchorLinkBrowserTransport({
-        // default: disable browser transport UI status messages, ual has its own
         requestStatus: this.requestStatus,
-        // default: do not disable fuel by default
         disableGreymassFuel: this.disableGreymassFuel,
+        fuelReferrer: this.fuelReferrer,
       }),
+      verifyProofs: this.verifyProofs,
     })
     // attempt to restore any existing session for this app
     const session = await this.link.restoreSession(this.appName)
     if (session) {
-      this.users = [new AnchorUser(this.rpc, { session })]
+      this.users = [new AnchorUser(this.rpc, this.client, { session })]
     }
   }
 
@@ -201,7 +231,7 @@ export class Anchor extends Authenticator {
       //  some changes to UAL are going to be required to support multiple users
       if (this.users.length === 0) {
         const identity = await this.link.login(this.appName)
-        this.users = [new AnchorUser(this.rpc, identity)]
+        this.users = [new AnchorUser(this.rpc, this.client, identity)]
       }
     } catch (e) {
       throw new UALAnchorError(
@@ -221,7 +251,7 @@ export class Anchor extends Authenticator {
     // retrieve the auth from the current user
     const { session: { auth } } = user
     // remove the session from anchor-link
-    await this.link.removeSession(this.appName, auth)
+    await this.link.removeSession(this.appName, auth, this.chainId)
     // reset the authenticator
     this.reset()
   }
