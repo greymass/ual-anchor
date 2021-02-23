@@ -53,7 +53,7 @@ export class AnchorUser extends User {
         signatures: this.objectify(completedTransaction.signatures),
       })
     } catch (e) {
-      const message = e.message ? e.message : 'Unable to sign transaction'
+      const message = 'Unable to sign transaction'
       const type = UALErrorType.Signing
       const cause = e
       throw new UALAnchorError(message, type, cause)
