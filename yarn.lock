@@ -161,10 +161,21 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@greymass/eosio@^0.2.3", "@greymass/eosio@^0.2.5":
+"@greymass/eosio@^0.2.3":
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.2.5.tgz#fef071e4eaa09620c959b81dbec372fb1495b1a9"
   integrity sha512-YbvfinU0sdmHT8vtaI8ddzdqN5D2gBqRB8YPz5OmKXFjXRmdEcSw1PxlWYWxEBaOTt1ij4wG7hghD83NALO28g==
+  dependencies:
+    bn.js "^4.4.0"
+    brorand "^1.0.1"
+    elliptic "^6.5.3"
+    hash.js "^1.0.0"
+    tslib "^2.0.3"
+
+"@greymass/eosio@^0.2.5":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.2.6.tgz#a765317a9b97669fa8b2f99f9d3e7a968ef9b940"
+  integrity sha512-1WjM9WS5VRbuVNXncwJ7ZTQsjWYdhuHiQqXrX45nNJtwHlOUL66tHECpV3LYjwrGxbwsGOnUE4twWezhl0dNbg==
   dependencies:
     bn.js "^4.4.0"
     brorand "^1.0.1"
@@ -465,9 +476,9 @@ ajv@^6.5.5:
     uri-js "^4.2.2"
 
 anchor-link-browser-transport@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/anchor-link-browser-transport/-/anchor-link-browser-transport-3.0.0.tgz#f5e5b0c7bc7ef4873b33bc0e6045188cc31097bd"
-  integrity sha512-zwjw8SQMD+nQeN9NYgW4tlRMc9I2ckeI93xG+e6sEPc507KzdK/DQqCW+OClegmpXgP6MpF5t56Kq0PPFCmZlw==
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/anchor-link-browser-transport/-/anchor-link-browser-transport-3.0.1.tgz#c36ab2ce0cf995aa33113a07341ef35500386360"
+  integrity sha512-YZoP2HV/Uh3CT2wva3EWMJMngcHoSj8S19yblgcHJoyHpqro08smRoPW9iDxifUIEEPsYpmk2F6x8BeRjsU6Ww==
   dependencies:
     tslib "^2.0.3"
 
@@ -690,7 +701,7 @@ bindings@^1.5.0:
   dependencies:
     file-uri-to-path "1.0.0"
 
-bn.js@^4.4.0:
+bn.js@^4.11.9, bn.js@^4.4.0:
   version "4.11.9"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.9.tgz#26d556829458f9d1e81fc48952493d0ba3507828"
   integrity sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==
@@ -719,7 +730,7 @@ braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
-brorand@^1.0.1:
+brorand@^1.0.1, brorand@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
   integrity sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
@@ -1135,17 +1146,17 @@ elliptic@6.5.2:
     minimalistic-crypto-utils "^1.0.0"
 
 elliptic@^6.5.3:
-  version "6.5.3"
-  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.3.tgz#cb59eb2efdaf73a0bd78ccd7015a62ad6e0f93d6"
-  integrity sha512-IMqzv5wNQf+E6aHeIqATs0tOLeOTwj1QKbRcS3jBbYkl5oLAserA8yJTT7/VyHUYG91PRmPyeQDObKLPpeS4dw==
+  version "6.5.4"
+  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.4.tgz#da37cebd31e79a1367e941b592ed1fbebd58abbb"
+  integrity sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==
   dependencies:
-    bn.js "^4.4.0"
-    brorand "^1.0.1"
+    bn.js "^4.11.9"
+    brorand "^1.1.0"
     hash.js "^1.0.0"
-    hmac-drbg "^1.0.0"
-    inherits "^2.0.1"
-    minimalistic-assert "^1.0.0"
-    minimalistic-crypto-utils "^1.0.0"
+    hmac-drbg "^1.0.1"
+    inherits "^2.0.4"
+    minimalistic-assert "^1.0.1"
+    minimalistic-crypto-utils "^1.0.1"
 
 emoji-regex@^7.0.1:
   version "7.0.3"
@@ -1586,7 +1597,7 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-hmac-drbg@^1.0.0:
+hmac-drbg@^1.0.0, hmac-drbg@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
   integrity sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=
@@ -1649,7 +1660,7 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@^2.0.1, inherits@^2.0.3:
+inherits@2, inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
