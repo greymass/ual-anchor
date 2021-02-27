@@ -8,8 +8,10 @@ export class UALAnchorError extends UALError {
     let m = message
     let e:any = new Error(message)
     if (cause) {
-      m = cause.details[0].message
-      e = new Error(cause.details[0].message)
+      if (cause.details && cause.details[0]) {
+        m = cause.details[0].message
+        e = new Error(cause.details[0].message)
+      }
       e.json = {
         code: 500,
         error: cause.error,
