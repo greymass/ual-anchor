@@ -246,12 +246,15 @@ export class Anchor extends Authenticator {
    * Logs the user out of the dapp. This will be strongly dependent on each Authenticator app's patterns.
    */
   public async logout(): Promise<void>  {
-    // retrieve the current user
-    const [user] = this.users
-    // retrieve the auth from the current user
-    const { session: { auth } } = user
-    // remove the session from anchor-link
-    await this.link.removeSession(this.appName, auth, this.chainId)
+    // Ensure a user exists to logout
+    if (this.users.length) {
+        // retrieve the current user
+        const [user] = this.users
+        // retrieve the auth from the current user
+        const { session: { auth } } = user
+        // remove the session from anchor-link
+        await this.link.removeSession(this.appName, auth, this.chainId)
+    }
     // reset the authenticator
     this.reset()
   }
