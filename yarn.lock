@@ -313,17 +313,6 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@greymass/eosio@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.3.2.tgz#2915a6687af0450b5a201b8f2f978e4a94c1671b"
-  integrity sha512-9nHuXMwg2QYB4TAO35zD/zObik5CAqas439kQEuljRwn7QQUsISDX+txICaJmKuBCmbnhHSWXwpDxib3f2m9jQ==
-  dependencies:
-    bn.js "^4.11.9"
-    brorand "^1.1.0"
-    elliptic "^6.5.4"
-    hash.js "^1.0.0"
-    tslib "^2.0.3"
-
 "@greymass/eosio@^0.4.0", "@greymass/eosio@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.4.3.tgz#7806e8bf9935ea5c1859fa57138a8ae7405570b8"
@@ -1380,7 +1369,7 @@ end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
-eosio-signing-request@^2.2.1:
+eosio-signing-request@^2.2.0, eosio-signing-request@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.2.1.tgz#9e7a18d88d87fe34538ef9d2ae962b12bcd413c7"
   integrity sha512-+u+A6SCmx6NslYFlS1lfehqH1zECvjpyYN7SSyz5h0+thz3J1N0Xf8QnInI3THLLm96hCy27RvK5SSEDyl6mxQ==
@@ -3947,9 +3936,9 @@ write-file-atomic@^3.0.0:
     typedarray-to-buffer "^3.1.5"
 
 ws@^7.4.3, ws@^7.4.4:
-  version "7.4.4"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.4.tgz#383bc9742cb202292c9077ceab6f6047b17f2d59"
-  integrity sha512-Qm8k8ojNQIMx7S+Zp8u/uHOx7Qazv3Yv4q68MiWWWOJhiwG5W3x7iqmRtJo8xxrciZUY4vRxUTJCKuRnF28ZZw==
+  version "7.4.6"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.6.tgz#5654ca8ecdeee47c33a9a4bf6d28e2be2980377c"
+  integrity sha512-YmhHDO4MzaDLB+M9ym/mDA5z0naX8j7SIlT8f8z+I0VtzsRbekxEutHSme7NPS2qE8StCYQNUnfWdXta/Yu85A==
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
