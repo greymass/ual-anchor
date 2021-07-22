@@ -681,10 +681,10 @@ ajv@^6.12.3:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-anchor-link-browser-transport@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/anchor-link-browser-transport/-/anchor-link-browser-transport-3.2.2.tgz#fb42164dadcc013e65fd7fedb2f7c1ecd3d25075"
-  integrity sha512-g9+2aPN+GJT5WEGWH5OPq9QW72Z8K0qU1MCp8T+LD8xQ4kCM5uiHYuNFAANzorkatDFRLVb1NEr1AECxvFSdMQ==
+anchor-link-browser-transport@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/anchor-link-browser-transport/-/anchor-link-browser-transport-3.2.3.tgz#a4770ae1fd42d362e513f04198ec298a87d8ed53"
+  integrity sha512-nLWcB2gCY95R3F54RiPltuOUssK9hry+Z8GXziRxj+HX9GNyb2f0lQ3YG3+U+yhJvQbXwIU9O5ssllZF2zpZPA==
   dependencies:
     tslib "^2.0.3"
 

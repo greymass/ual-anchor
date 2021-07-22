@@ -21,7 +21,7 @@
   "dependencies": {
     "@greymass/eosio": "^0.4.3",
     "anchor-link": "^3.3.2",
-    "anchor-link-browser-transport": "^3.2.2",
+    "anchor-link-browser-transport": "^3.2.3",
     "elliptic": "6.5.4",
     "eosio-signing-request": "^2.2.1",
     "eosjs": "^21.0.3",
