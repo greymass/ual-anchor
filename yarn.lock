@@ -313,17 +313,6 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@greymass/eosio@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.3.2.tgz#2915a6687af0450b5a201b8f2f978e4a94c1671b"
-  integrity sha512-9nHuXMwg2QYB4TAO35zD/zObik5CAqas439kQEuljRwn7QQUsISDX+txICaJmKuBCmbnhHSWXwpDxib3f2m9jQ==
-  dependencies:
-    bn.js "^4.11.9"
-    brorand "^1.1.0"
-    elliptic "^6.5.4"
-    hash.js "^1.0.0"
-    tslib "^2.0.3"
-
 "@greymass/eosio@^0.4.0", "@greymass/eosio@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.4.3.tgz#7806e8bf9935ea5c1859fa57138a8ae7405570b8"
@@ -692,17 +681,17 @@ ajv@^6.12.3:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-anchor-link-browser-transport@^3.1.3:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/anchor-link-browser-transport/-/anchor-link-browser-transport-3.1.3.tgz#eb65dbcba9380885f36b08b2a9d05bf9cdeb4e46"
-  integrity sha512-r5S7r/NkkBQaUydh0Q3MOZZ7oQo1KZZ72LHtJzW5PX1v2dIW76/hxsKVE9IjwmIIeHvB6jqgHgTk0Rm3YVdqYw==
+anchor-link-browser-transport@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/anchor-link-browser-transport/-/anchor-link-browser-transport-3.2.2.tgz#fb42164dadcc013e65fd7fedb2f7c1ecd3d25075"
+  integrity sha512-g9+2aPN+GJT5WEGWH5OPq9QW72Z8K0qU1MCp8T+LD8xQ4kCM5uiHYuNFAANzorkatDFRLVb1NEr1AECxvFSdMQ==
   dependencies:
     tslib "^2.0.3"
 
-anchor-link@^3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-3.2.3.tgz#ed57b54050a74ae3fb391bdb67f78c7196d8a343"
-  integrity sha512-1AnQLwO6tKWAP7l9/dwQ4iRT8RvNFBDPb7mxdqS2hURJa6zXEI9UdIMKCVKP64iiu2Jekf8/TSXnFKJFVXIPog==
+anchor-link@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-3.3.2.tgz#7165b7d28cfe26ce2f7db959e8971bb13c029c20"
+  integrity sha512-JDsI2Xwy4Y4D1AzfgSOioOBb5GfDPteQZOSu+cs2hT8gdRg4Asfhnxj8qDwpZX5RWdxP2NyHJEqBW5xDWH93kw==
   dependencies:
     "@greymass/eosio" "^0.4.0"
     asmcrypto.js "^2.3.2"
@@ -1379,6 +1368,14 @@ end-of-stream@^1.1.0:
   integrity sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==
   dependencies:
     once "^1.4.0"
+
+eosio-signing-request@^2.2.0:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-2.2.2.tgz#281cfe0843dc80205c89003d5638baf70fdcc449"
+  integrity sha512-lxRBHYkk2rAnnZrFnTqweD1FLH3usL5oE24m3+1zNK2vJHRVlIyUk7tlUlmax78j8+FE54Po8LQCQ8TrCSSFGg==
+  dependencies:
+    "@greymass/eosio" "^0.4.0"
+    tslib "^2.0.3"
 
 eosio-signing-request@^2.2.1:
   version "2.2.1"
