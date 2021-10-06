@@ -19,7 +19,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@greymass/eosio": "^0.5.1",
+    "@greymass/eosio": "0.5.2",
     "anchor-link": "^3.3.4",
     "anchor-link-browser-transport": "^3.2.5",
     "elliptic": "6.5.4",
@@ -29,7 +29,7 @@
   },
   "resolutions": {
     "cache-base": "4.0.0",
-    "@greymass/eosio": "0.5.1"
+    "@greymass/eosio": "0.5.2"
   },
   "jest": {
     "verbose": false,

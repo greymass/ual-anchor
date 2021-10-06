@@ -313,10 +313,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@greymass/eosio@0.5.1", "@greymass/eosio@^0.4.0", "@greymass/eosio@^0.5.0", "@greymass/eosio@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.5.1.tgz#33f9b4786d73b57e8b0910f7b2ab42b8e37eba92"
-  integrity sha512-JyemxOwN7vdMUtBQ+76ZCIbs0TXJhrJiEceX32MsOfzrh5G8VDhk96orT8Qf/hMwrGsDnpG380hJx9zsdYTtzQ==
+"@greymass/eosio@0.5.2", "@greymass/eosio@^0.4.0", "@greymass/eosio@^0.5.0":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.5.2.tgz#b7fa20937e6378277534e97b828ea871f1804953"
+  integrity sha512-3qMnm4o3B5GZ0cXK/AaKYyDkFLISHSkO3G0hPtn9aYdzNKuefyacyKWKQjQKC4kKLsNoJQd7d1ldAkV8Z0+0gA==
   dependencies:
     bn.js "^4.11.9"
     brorand "^1.1.0"
