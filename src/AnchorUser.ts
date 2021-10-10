@@ -43,7 +43,19 @@ export class AnchorUser extends User {
 
   public async signTransaction(transaction, options): Promise<SignTransactionResponse> {
     try {
-      const completedTransaction = await this.session.transact(transaction, options)
+      let completedTransaction
+      // If this is not a transaction and expireSeconds is passed, form a transaction
+      //   Note: this needs to be done because the session transact doesn't understand eosjs transact options
+      if (options.expireSeconds && !transaction.expiration) {
+        const info = await this.client.v1.chain.get_info()
+        const tx = {
+          ...transaction,
+          ...info.getTransactionHeader(options.expireSeconds)
+        }
+        completedTransaction = await this.session.transact(tx, options)
+      } else {
+        completedTransaction = await this.session.transact(transaction, options)
+      }
       const wasBroadcast = (options.broadcast !== false)
       const serializedTransaction = PackedTransaction.fromSigned(SignedTransaction.from(completedTransaction.transaction))
       return this.returnEosjsTransaction(wasBroadcast, {
