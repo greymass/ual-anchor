@@ -1,6 +1,6 @@
 {
   "name": "ual-anchor",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "main": "dist/index.js",
   "license": "MIT",
   "author": {
@@ -19,7 +19,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@greymass/eosio": "0.5.2",
+    "@greymass/eosio": "^0.5.2",
     "anchor-link": "^3.3.4",
     "anchor-link-browser-transport": "^3.2.5",
     "elliptic": "6.5.4",
