@@ -313,10 +313,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@greymass/eosio@0.5.2", "@greymass/eosio@^0.5.0":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.5.2.tgz#b7fa20937e6378277534e97b828ea871f1804953"
-  integrity sha512-3qMnm4o3B5GZ0cXK/AaKYyDkFLISHSkO3G0hPtn9aYdzNKuefyacyKWKQjQKC4kKLsNoJQd7d1ldAkV8Z0+0gA==
+"@greymass/eosio@0.5.4", "@greymass/eosio@^0.5.0", "@greymass/eosio@^0.5.2":
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@greymass/eosio/-/eosio-0.5.4.tgz#22ddb16f90aa6841bea4f50c1ddef0cc3b79d384"
+  integrity sha512-bcXsGenmzXtFm6PkGCpWREqTHKG3PDT8peNEH6N358GFwjOuqenMDh/r4eMv2uekNETzyNwQ1VF2Hxb/SaY2ng==
   dependencies:
     bn.js "^4.11.9"
     brorand "^1.1.0"
@@ -688,10 +688,10 @@ anchor-link-browser-transport@^3.2.5:
   dependencies:
     tslib "^2.0.3"
 
-anchor-link@^3.3.4:
-  version "3.3.5"
-  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-3.3.5.tgz#aa987e32bca4b9316d4cb0b0f8b5bf79a5f5a729"
-  integrity sha512-zZZ7MiF+L0/hIcH5+yf9Saur9jYxp2kGAyggjXMLW4ofRuA9mQrA3o1CFEjj0DviIVL+JLHOxoR2hOG7WnXBEg==
+anchor-link@^3.3.8:
+  version "3.3.8"
+  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-3.3.8.tgz#e00d4709001c5b430fb5632877941e8ffa79f0aa"
+  integrity sha512-pKtdnOHhtlv6wkAhfv3TFvSVoYB1z3IdZJo5MFUG7bBWiSsQxzMJRShQy8o0xRLEyxwfk9EL2VLhnfAHJVQRng==
   dependencies:
     "@greymass/eosio" "^0.5.0"
     asmcrypto.js "^2.3.2"

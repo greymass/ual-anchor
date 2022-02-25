@@ -12,6 +12,7 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "declaration": true
   },
   "lib": ["esnext"],
