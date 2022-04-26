@@ -324,6 +324,13 @@
     hash.js "^1.0.0"
     tslib "^2.0.3"
 
+"@greymass/miniaes@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@greymass/miniaes/-/miniaes-1.0.0.tgz#2337a4637edbb49289f3c977c5891bb6bef1ba75"
+  integrity sha512-xKYTnAyyoq3gpJS11JvU4dkju28M8Zbp06CuP3aKR4DMH6B2z64LauGGGzKksKh5Qd770JA/dzhLbImnBlymbg==
+  dependencies:
+    tslib "^2.1.0"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -688,20 +695,20 @@ anchor-link-browser-transport@^3.2.5:
   dependencies:
     tslib "^2.0.3"
 
-anchor-link@^3.3.8:
-  version "3.3.8"
-  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-3.3.8.tgz#e00d4709001c5b430fb5632877941e8ffa79f0aa"
-  integrity sha512-pKtdnOHhtlv6wkAhfv3TFvSVoYB1z3IdZJo5MFUG7bBWiSsQxzMJRShQy8o0xRLEyxwfk9EL2VLhnfAHJVQRng==
+anchor-link@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-3.4.1.tgz#ffd725ee8e570ba944de000f5fdc21a0176d8e4c"
+  integrity sha512-Fe0rNXjMcNV5DY6eSnjWdgjOniF8GloP/ZKlRWJW9z7dh6BINfjKJWxYd/cLYrykL1vNZMRKX3zWGJkLWqxFZw==
   dependencies:
     "@greymass/eosio" "^0.5.0"
-    asmcrypto.js "^2.3.2"
+    "@greymass/miniaes" "^1.0.0"
     eosio-signing-request "^2.2.0"
     fetch-ponyfill "^7.1.0"
     isomorphic-ws "^4.0.1"
     pako "^2.0.3"
     tslib "^2.1.0"
     uuid "^8.3.2"
-    ws "^7.4.3"
+    ws "^8.5.0"
 
 ansi-escapes@^4.2.1:
   version "4.3.1"
@@ -771,11 +778,6 @@ array-unique@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/array-unique/-/array-unique-0.3.2.tgz#a894b75d4bc4f6cd679ef3244a9fd8f46ae2d428"
   integrity sha1-qJS3XUvE9s1nnvMkSp/Y9Gri1Cg=
-
-asmcrypto.js@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/asmcrypto.js/-/asmcrypto.js-2.3.2.tgz#b9f84bd0a1fb82f21f8c29cc284a707ad17bba2e"
-  integrity sha512-3FgFARf7RupsZETQ1nHnhLUUvpcttcCq1iZCaVAbJZbCZ5VNRrNyvpDyHTOb0KC3llFcsyOT/a99NZcCbeiEsA==
 
 asn1@~0.2.3:
   version "0.2.4"
@@ -3955,15 +3957,15 @@ write-file-atomic@^3.0.0:
     signal-exit "^3.0.2"
     typedarray-to-buffer "^3.1.5"
 
-ws@^7.4.3:
-  version "7.5.6"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.6.tgz#e59fc509fb15ddfb65487ee9765c5a51dec5fe7b"
-  integrity sha512-6GLgCqo2cy2A2rjCNFlxQS6ZljG/coZfZXclldI8FB/1G3CCI36Zd8xy2HrFVACi8tfk5XrgLQEk+P0Tnz9UcA==
-
 ws@^7.4.4:
   version "7.4.4"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.4.tgz#383bc9742cb202292c9077ceab6f6047b17f2d59"
   integrity sha512-Qm8k8ojNQIMx7S+Zp8u/uHOx7Qazv3Yv4q68MiWWWOJhiwG5W3x7iqmRtJo8xxrciZUY4vRxUTJCKuRnF28ZZw==
+
+ws@^8.5.0:
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.5.0.tgz#bfb4be96600757fe5382de12c670dab984a1ed4f"
+  integrity sha512-BWX0SWVgLPzYwF8lTzEy1egjhS4S4OEAHfsO8o65WOVsrnSRGaSiUaa9e0ggGlkMTtBlmOpEXiie9RUcBO86qg==
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
