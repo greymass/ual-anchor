@@ -19,17 +19,17 @@
     "test": "jest"
   },
   "dependencies": {
-    "@greymass/eosio": "^0.5.2",
-    "anchor-link": "^3.4.1",
-    "anchor-link-browser-transport": "^3.2.5",
+    "@greymass/eosio": "^0.6.0",
+    "anchor-link": "^3.5.0",
+    "anchor-link-browser-transport": "^3.5.0",
+    "cache-base": "4.0.2",
     "elliptic": "6.5.4",
-    "eosio-signing-request": "^2.3.1",
-    "eosjs": "^21.0.3",
+    "eosio-signing-request": "^2.5.0",
+    "eosjs": "^22.1.0",
     "universal-authenticator-library": "0.3.0"
   },
   "resolutions": {
-    "cache-base": "4.0.0",
-    "@greymass/eosio": "0.5.4"
+    "cache-base": "4.0.0"
   },
   "jest": {
     "verbose": false,
@@ -53,15 +53,15 @@
     "testEnvironment": "jsdom"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.2.0",
+    "@babel/runtime": "^7.17.9",
     "@blockone/tslint-config-blockone": "^4.0.1",
-    "@types/elliptic": "^6.4.10",
-    "@types/jest": "^26.0.21",
-    "@types/node": "^14.14.35",
-    "jest": "^26.6.3",
-    "ts-jest": "^26.5.4",
+    "@types/elliptic": "^6.4.14",
+    "@types/jest": "^27.5.0",
+    "@types/node": "^17.0.32",
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.2",
     "tslint": "^6.1.3",
-    "typescript": "^4.2.3"
+    "typescript": "^4.6.4"
   },
   "repository": {
     "type": "git",
